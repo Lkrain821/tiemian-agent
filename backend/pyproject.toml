@@ -1,0 +1,47 @@
+[project]
+name = "tiemian-backend"
+version = "0.1.0"
+description = "Backend service for the Tiemian AI interview agent"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "aiosqlite>=0.21,<1",
+    "fastapi>=0.136.2,<0.140",
+    "langchain>=1.0,<2",
+    "langgraph>=1.1,<2",
+    "langgraph-checkpoint-sqlite>=3.0,<4",
+    "openai>=2.8,<3",
+    "pydantic>=2.12,<3",
+    "pydantic-settings>=2.12,<3",
+    "uvicorn[standard]>=0.34,<1",
+]
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28,<1",
+    "pytest>=8.4,<10",
+    "pytest-asyncio>=1.1,<2",
+    "pytest-cov>=6,<8",
+]
+
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers -p no:cacheprovider"
+asyncio_mode = "auto"
+testpaths = ["tests"]
+markers = [
+    "live: requires the real DeepSeek API and may consume account quota",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["app"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true

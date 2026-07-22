@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f5f5">
+  <meta name="description" content="铁面 AI Agent 开发模拟面试进行中。">
+  <title>面试进行中｜铁面 AI 面试官</title>
+  <script src="theme.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="interview-page">
+  <div class="ambient-grid" aria-hidden="true"></div>
+
+  <header class="site-header compact-header">
+    <a class="brand" href="index.html" aria-label="铁面首页">
+      <span class="brand-mark" aria-hidden="true">铁</span>
+      <span class="brand-copy">
+        <strong>铁面</strong>
+        <small>AI INTERVIEWER</small>
+      </span>
+    </a>
+    <div class="session-title">
+      <span class="live-dot" aria-hidden="true"></span>
+      <div>
+        <strong>AI Agent 开发 · 中级</strong>
+        <small>模拟面试进行中</small>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="切换到深色模式">
+        <span class="theme-toggle-icon" aria-hidden="true"></span>
+        <span class="theme-toggle-label">深色</span>
+      </button>
+      <button class="quiet-button" type="button" data-open-end>提前结束</button>
+    </div>
+  </header>
+
+  <main class="interview-shell">
+    <section class="chat-card" aria-labelledby="chat-title">
+      <div class="chat-header">
+        <div>
+          <span class="section-eyebrow">LIVE INTERVIEW</span>
+          <h1 id="chat-title">技术面试</h1>
+        </div>
+        <div class="question-badge">
+          <span>当前问题</span>
+          <strong>02 <small>/ 05</small></strong>
+        </div>
+      </div>
+
+      <div class="chat-scroll" id="chatStream" aria-live="polite">
+        <div class="timeline-marker"><span>问题 02</span><i></i><small>RAG 与知识应用</small></div>
+
+        <article class="message interviewer-message">
+          <div class="message-avatar" aria-hidden="true">铁</div>
+          <div class="message-content">
+            <div class="message-meta">
+              <strong>铁面 · 面试官</strong>
+              <time>12:09</time>
+            </div>
+            <div class="message-bubble">
+              <p>你接手了一个已经上线的 RAG 系统，用户最近频繁反馈“答非所问”。离线抽样发现，相关文档经常没有进入 Top-K。</p>
+              <p><strong>请按优先级说明，你会如何定位召回效果变差的原因？</strong></p>
+            </div>
+            <span class="message-tag">主问题 · 召回诊断</span>
+          </div>
+        </article>
+
+        <article class="message candidate-message">
+          <div class="message-avatar" aria-hidden="true">我</div>
+          <div class="message-content">
+            <div class="message-meta">
+              <strong>我的回答</strong>
+              <time>12:14</time>
+            </div>
+            <div class="message-bubble">
+              <p>我会先把链路拆成数据、切分、索引和查询四段。先确认原始文档是否完整入库以及更新时间，再抽样检查 chunk 是否破坏语义；之后用一组标注查询分别观察向量召回和关键词召回的 Recall@K，最后检查 embedding 模型或索引参数最近是否变更。</p>
+              <p>如果单路召回正常，我会继续看融合和重排阶段是否把相关文档挤出了 Top-K。</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="message interviewer-message follow-up-message">
+          <div class="message-avatar" aria-hidden="true">铁</div>
+          <div class="message-content">
+            <div class="message-meta">
+              <strong>铁面 · 面试官</strong>
+              <time>12:15</time>
+            </div>
+            <div class="message-bubble">
+              <span class="follow-up-label">追问 1 / 2</span>
+              <p>你提到了用 Recall@K 分段定位。假设向量召回的 Recall@20 正常，但最终 Top-5 的相关性明显下降，你会如何区分是融合策略还是重排模型的问题？</p>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <form class="answer-composer" id="answerForm">
+        <label class="sr-only" for="answerInput">输入你的回答</label>
+        <textarea id="answerInput" rows="4" maxlength="1200" placeholder="组织你的思路并回答追问…"></textarea>
+        <div class="composer-footer">
+          <span class="answer-hint"><kbd>Ctrl</kbd> + <kbd>Enter</kbd> 发送</span>
+          <div class="composer-actions">
+            <span class="char-count"><b id="charCount">0</b> / 1200</span>
+            <button class="send-button" type="submit">
+              提交回答
+              <span aria-hidden="true">↑</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <aside class="progress-panel" aria-labelledby="progress-title">
+      <div class="progress-topline">
+        <div>
+          <span class="section-eyebrow">SESSION STATUS</span>
+          <h2 id="progress-title">面试进度</h2>
+        </div>
+        <span class="autosave-label"><i></i> 已记录</span>
+      </div>
+
+      <div class="progress-overview">
+        <div class="progress-ring" aria-label="面试完成 40%">
+          <div><strong>40</strong><span>%</span></div>
+        </div>
+        <div class="progress-copy">
+          <span>已完成</span>
+          <strong>2 / 5 <small>道主问题</small></strong>
+          <p>当前：RAG 召回诊断</p>
+        </div>
+      </div>
+
+      <div class="session-metrics">
+        <div class="metric-card">
+          <span>已用时长</span>
+          <strong id="elapsedTime" data-seconds="768">12:48</strong>
+        </div>
+        <div class="metric-card">
+          <span>当前追问</span>
+          <strong><b id="followUpLevel">1</b> <small>/ 2</small></strong>
+        </div>
+      </div>
+
+      <section class="follow-up-depth" aria-labelledby="depth-title">
+        <div class="panel-subheading">
+          <h3 id="depth-title">追问层级</h3>
+          <span>DEEP DIVE</span>
+        </div>
+        <div class="depth-track">
+          <div class="depth-step complete"><i>✓</i><span>主回答</span></div>
+          <div class="depth-line active"></div>
+          <div class="depth-step current"><i>1</i><span>追问一</span></div>
+          <div class="depth-line"></div>
+          <div class="depth-step"><i>2</i><span>追问二</span></div>
+        </div>
+      </section>
+
+      <section class="question-outline" aria-labelledby="outline-title">
+        <div class="panel-subheading">
+          <h3 id="outline-title">问题进度</h3>
+          <span>QUESTION MAP</span>
+        </div>
+        <ol>
+          <li class="done">
+            <span class="outline-index">01</span>
+            <span class="outline-copy"><strong>Agent 记忆机制</strong><small>已完成 · 1 次追问</small></span>
+            <i aria-hidden="true">✓</i>
+          </li>
+          <li class="active" aria-current="step">
+            <span class="outline-index">02</span>
+            <span class="outline-copy"><strong>RAG 召回诊断</strong><small>进行中 · 追问 1/2</small></span>
+            <i aria-hidden="true"></i>
+          </li>
+          <li>
+            <span class="outline-index">03</span>
+            <span class="outline-copy"><strong>工具调用可靠性</strong><small>等待开始</small></span>
+          </li>
+          <li>
+            <span class="outline-index">04</span>
+            <span class="outline-copy"><strong>工作流架构取舍</strong><small>等待开始</small></span>
+          </li>
+          <li>
+            <span class="outline-index">05</span>
+            <span class="outline-copy"><strong>Agent 评测体系</strong><small>等待开始</small></span>
+          </li>
+        </ol>
+      </section>
+
+      <div class="interview-notice">
+        <span aria-hidden="true">●</span>
+        <p>回答不会立即评分。完成面试后，你将获得基于本场证据的完整报告。</p>
+      </div>
+    </aside>
+  </main>
+
+  <dialog class="end-dialog" id="endDialog" aria-labelledby="end-dialog-title">
+    <button class="dialog-close" type="button" data-close-end aria-label="关闭">×</button>
+    <span class="dialog-icon" aria-hidden="true">!</span>
+    <h2 id="end-dialog-title">确认提前结束？</h2>
+    <p>当前完成 2 / 5 道主问题。报告将标记为“未完整完成”，维度结论仅供参考。</p>
+    <div class="dialog-actions">
+      <button class="secondary-action" type="button" data-close-end>继续面试</button>
+      <a class="danger-action" href="report.html">结束并查看报告</a>
+    </div>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>

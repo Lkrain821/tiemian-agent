@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f5f5">
+  <meta name="description" content="铁面 AI Agent 开发模拟面试评估报告。">
+  <title>面试评估报告｜铁面 AI 面试官</title>
+  <script src="theme.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="report-page">
+  <div class="ambient-grid" aria-hidden="true"></div>
+
+  <header class="site-header compact-header">
+    <a class="brand" href="index.html" aria-label="铁面首页">
+      <span class="brand-mark" aria-hidden="true">铁</span>
+      <span class="brand-copy">
+        <strong>铁面</strong>
+        <small>AI INTERVIEWER</small>
+      </span>
+    </a>
+    <div class="report-header-title">
+      <span>ASSESSMENT REPORT</span>
+      <strong>面试评估报告</strong>
+    </div>
+    <div class="header-actions">
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="切换到深色模式">
+        <span class="theme-toggle-icon" aria-hidden="true"></span>
+        <span class="theme-toggle-label">深色</span>
+      </button>
+      <a class="quiet-button link-button" href="index.html">重新面试</a>
+    </div>
+  </header>
+
+  <main class="report-main">
+    <section class="report-hero" aria-labelledby="report-title">
+      <div class="report-intro">
+        <span class="section-eyebrow">INTERVIEW COMPLETED · 2026.07.21</span>
+        <h1 id="report-title">你具备扎实的 Agent 工程基础，<br><em>系统性仍可再进一阶。</em></h1>
+        <p>你能快速拆解问题并给出可落地的排查路径，在 RAG 诊断和工具调用方面表现突出。进一步加强评测闭环与边界条件的量化，会让答案更接近高级工程师水位。</p>
+        <div class="report-tags">
+          <span>AI Agent 开发</span>
+          <span>中级</span>
+          <span>5 / 5 已完成</span>
+          <span>用时 31:26</span>
+        </div>
+      </div>
+
+      <div class="total-score-card">
+        <div class="score-topline"><span>综合得分</span><small>TOTAL SCORE</small></div>
+        <div class="score-value"><strong>84</strong><span>/ 100</span></div>
+        <div class="score-band"><i></i><span>表现良好</span><small>超过本场预期</small></div>
+        <div class="score-scale" aria-hidden="true">
+          <i></i><i></i><i></i><i></i><i></i><span style="--score-position: 84%"></span>
+        </div>
+        <div class="score-scale-labels"><span>需加强</span><span>达到预期</span><span>优秀</span></div>
+      </div>
+    </section>
+
+    <section class="dimension-section" aria-labelledby="dimension-title">
+      <div class="report-section-heading">
+        <div>
+          <span class="section-number">01</span>
+          <div><span class="section-eyebrow">CAPABILITY PROFILE</span><h2 id="dimension-title">能力维度</h2></div>
+        </div>
+        <p>分数仅基于本场回答证据</p>
+      </div>
+
+      <div class="dimension-grid">
+        <article class="dimension-card">
+          <div class="dimension-top">
+            <span class="dimension-icon">01</span>
+            <span class="dimension-score">88<small>/100</small></span>
+          </div>
+          <h3>基础知识</h3>
+          <p>核心概念准确，能清楚区分检索、重排与生成阶段。</p>
+          <div class="dimension-bar"><i style="--bar-width: 88%"></i></div>
+          <span class="dimension-level strong">优势项</span>
+        </article>
+        <article class="dimension-card">
+          <div class="dimension-top">
+            <span class="dimension-icon">02</span>
+            <span class="dimension-score">81<small>/100</small></span>
+          </div>
+          <h3>原理深度</h3>
+          <p>能解释关键机制，部分回答还可继续深入模型边界。</p>
+          <div class="dimension-bar"><i style="--bar-width: 81%"></i></div>
+          <span class="dimension-level">达到预期</span>
+        </article>
+        <article class="dimension-card focus-card">
+          <div class="dimension-top">
+            <span class="dimension-icon">03</span>
+            <span class="dimension-score">76<small>/100</small></span>
+          </div>
+          <h3>实战经验</h3>
+          <p>排查路径完整，但量化指标与生产故障复盘证据偏少。</p>
+          <div class="dimension-bar"><i style="--bar-width: 76%"></i></div>
+          <span class="dimension-level focus">重点提升</span>
+        </article>
+        <article class="dimension-card">
+          <div class="dimension-top">
+            <span class="dimension-icon">04</span>
+            <span class="dimension-score">90<small>/100</small></span>
+          </div>
+          <h3>表达逻辑</h3>
+          <p>结论先行、层次清楚，能主动说明方案之间的取舍。</p>
+          <div class="dimension-bar"><i style="--bar-width: 90%"></i></div>
+          <span class="dimension-level strong">本场最佳</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="evidence-summary" aria-label="表现摘要">
+      <article class="summary-card strength-summary">
+        <div class="summary-label"><span aria-hidden="true">↑</span> 明确优势</div>
+        <h3>能把复杂链路拆成可验证的步骤</h3>
+        <p>在 RAG 召回诊断中，你按数据、切分、索引、检索和重排分层定位，并主动提出使用 Recall@K 建立证据。</p>
+      </article>
+      <article class="summary-card risk-summary">
+        <div class="summary-label"><span aria-hidden="true">△</span> 主要短板</div>
+        <h3>评测标准缺少明确的业务闭环</h3>
+        <p>你提到了离线指标和人工抽样，但没有充分说明如何把任务成功率、线上反馈与发布门禁连成闭环。</p>
+      </article>
+    </section>
+
+    <section class="question-review" aria-labelledby="review-title">
+      <div class="report-section-heading">
+        <div>
+          <span class="section-number">02</span>
+          <div><span class="section-eyebrow">QUESTION REVIEW</span><h2 id="review-title">逐题得分与点评</h2></div>
+        </div>
+        <p>展开查看回答证据与改进方向</p>
+      </div>
+
+      <div class="review-list">
+        <details class="review-item">
+          <summary>
+            <span class="review-index">01</span>
+            <span class="review-title"><small>基础机制 · 1 次追问</small><strong>如何为 Agent 设计短期记忆与长期记忆？</strong></span>
+            <span class="review-score high"><strong>86</strong><small>分</small></span>
+            <span class="detail-toggle" aria-hidden="true">+</span>
+          </summary>
+          <div class="review-body">
+            <div><h4>回答亮点</h4><p>准确区分了会话上下文、摘要记忆和可检索长期记忆，并提到了敏感信息清理与记忆过期。</p></div>
+            <div><h4>可以更好</h4><p>可补充记忆写入触发条件，以及如何评估“记住”是否真正改善任务成功率。</p></div>
+          </div>
+        </details>
+
+        <details class="review-item" open>
+          <summary>
+            <span class="review-index">02</span>
+            <span class="review-title"><small>RAG 诊断 · 2 次追问</small><strong>RAG 系统召回效果变差，如何定位问题？</strong></span>
+            <span class="review-score"><strong>82</strong><small>分</small></span>
+            <span class="detail-toggle" aria-hidden="true">+</span>
+          </summary>
+          <div class="review-body">
+            <div><h4>回答亮点</h4><p>排查顺序合理，能通过分阶段指标区分数据、召回、融合与重排问题；没有直接依赖“调大 Top-K”作为补丁。</p></div>
+            <div><h4>可以更好</h4><p>追问中虽然提出做旁路对照实验，但未说明标注集的查询分层以及线上流量变化可能造成的数据漂移。</p></div>
+            <div class="evidence-quote"><span>证据摘录</span><p>“我会固定同一批候选集，分别绕过融合和替换重排模型做对照，再观察 NDCG 与最终命中变化。”</p></div>
+          </div>
+        </details>
+
+        <details class="review-item">
+          <summary>
+            <span class="review-index">03</span>
+            <span class="review-title"><small>工程可靠性 · 2 次追问</small><strong>如何处理 Agent 工具调用中的超时、重试与幂等？</strong></span>
+            <span class="review-score high"><strong>88</strong><small>分</small></span>
+            <span class="detail-toggle" aria-hidden="true">+</span>
+          </summary>
+          <div class="review-body">
+            <div><h4>回答亮点</h4><p>覆盖超时预算、指数退避、幂等键与人工接管，能区分只读工具和有副作用工具。</p></div>
+            <div><h4>可以更好</h4><p>还可说明跨工具调用链路的追踪标识，以及补偿操作失败后的最终一致性策略。</p></div>
+          </div>
+        </details>
+
+        <details class="review-item">
+          <summary>
+            <span class="review-index">04</span>
+            <span class="review-title"><small>架构取舍 · 1 次追问</small><strong>什么时候选择固定工作流，而不是自主 Agent？</strong></span>
+            <span class="review-score high"><strong>87</strong><small>分</small></span>
+            <span class="detail-toggle" aria-hidden="true">+</span>
+          </summary>
+          <div class="review-body">
+            <div><h4>回答亮点</h4><p>从任务确定性、错误成本、审计要求和延迟预算进行选择，并提出优先使用最小自治范围。</p></div>
+            <div><h4>可以更好</h4><p>可以补充逐步放开自治能力的上线策略和明确回退条件。</p></div>
+          </div>
+        </details>
+
+        <details class="review-item">
+          <summary>
+            <span class="review-index">05</span>
+            <span class="review-title"><small>评测体系 · 2 次追问</small><strong>如何评估一个 Agent 系统是否可以上线？</strong></span>
+            <span class="review-score needs-work"><strong>76</strong><small>分</small></span>
+            <span class="detail-toggle" aria-hidden="true">+</span>
+          </summary>
+          <div class="review-body">
+            <div><h4>回答亮点</h4><p>提到了任务成功率、工具调用正确率、安全测试和端到端人工评审。</p></div>
+            <div><h4>可以更好</h4><p>缺少不同风险场景的发布阈值、回归集版本管理，以及上线后告警与回滚门槛。</p></div>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="improvement-section" aria-labelledby="improvement-title">
+      <div class="report-section-heading">
+        <div>
+          <span class="section-number">03</span>
+          <div><span class="section-eyebrow">NEXT ACTIONS</span><h2 id="improvement-title">三条优先改进建议</h2></div>
+        </div>
+        <p>按投入产出比排序</p>
+      </div>
+
+      <div class="improvement-list">
+        <article class="improvement-card priority-one">
+          <span class="priority-index">01</span>
+          <div class="improvement-content">
+            <div class="improvement-heading"><span>最高优先级</span><small>预计 2–3 次专项练习</small></div>
+            <h3>建立 Agent 评测的完整发布门禁</h3>
+            <p>针对一个真实任务，分别定义离线回归、人工红队、灰度监控和回滚阈值。下次回答时必须说清“指标—阈值—动作”。</p>
+            <div class="action-check"><i aria-hidden="true">✓</i><span>完成标志：能在 3 分钟内画出一套从离线到线上的评测闭环</span></div>
+          </div>
+        </article>
+        <article class="improvement-card">
+          <span class="priority-index">02</span>
+          <div class="improvement-content">
+            <div class="improvement-heading"><span>工程深化</span><small>结合项目复盘</small></div>
+            <h3>用量化证据替代“经验上应该”</h3>
+            <p>为常见排查方案补充指标、基线和对照实验。重点练习 Recall@K、NDCG、任务成功率和工具调用失败率的适用边界。</p>
+            <div class="action-check"><i aria-hidden="true">✓</i><span>完成标志：每个技术判断都能给出一个验证方式</span></div>
+          </div>
+        </article>
+        <article class="improvement-card">
+          <span class="priority-index">03</span>
+          <div class="improvement-content">
+            <div class="improvement-heading"><span>表达升级</span><small>保持现有优势</small></div>
+            <h3>在结论后补充边界与失败条件</h3>
+            <p>继续使用“结论—拆解—验证”的表达结构，并在结尾主动补充方案在哪些约束下会失效，以及对应的回退路径。</p>
+            <div class="action-check"><i aria-hidden="true">✓</i><span>完成标志：每道系统设计题至少指出一个失败条件</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="report-cta">
+      <div><span class="section-eyebrow">READY FOR ANOTHER ROUND?</span><h2>针对短板，再练一次。</h2><p>建议下一场选择“工作流与工具调用 · 高级”。</p></div>
+      <a class="primary-action compact-action" href="index.html"><span>开始新的面试</span><span class="action-arrow" aria-hidden="true">→</span></a>
+    </section>
+
+    <p class="report-disclaimer">本报告仅基于本场模拟问答生成，用于个人训练与复盘，不代表真实招聘评价或录用结果。</p>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

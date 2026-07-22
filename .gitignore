@@ -1,0 +1,16 @@
+.env
+.venv/
+backend/.venv/
+backend/.uv-cache/
+.uv-cache/
+.pnpm-store/
+.bun-tmp/
+node_modules/
+frontend/dist/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+data/*.sqlite3
+data/*.sqlite3-*

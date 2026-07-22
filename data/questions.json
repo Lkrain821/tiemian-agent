@@ -1,0 +1,582 @@
+{
+  "version": "1.0.0",
+  "direction": "ai_agent_development",
+  "questions": [
+    {
+      "id": "rag_junior_01",
+      "variant_group": "rag_pipeline_basics",
+      "direction": "ai_agent_development",
+      "focus_tags": ["rag_knowledge_application"],
+      "topic": "rag",
+      "topic_label": "RAG",
+      "difficulty": "junior",
+      "competency_tags": ["retrieval_pipeline", "grounding"],
+      "dimension_targets": {"foundation": 0.5, "engineering": 0.2, "problem_solving": 0.2, "communication": 0.1},
+      "stem": "请说明一个基础 RAG 系统从用户问题到最终回答的完整链路，并解释检索结果为什么不能直接等同于最终答案。",
+      "followup_axes": ["检索与生成的职责边界", "引用与事实一致性", "空召回处理"],
+      "rubric_points": {
+        "key_points": ["覆盖切分、向量化、索引、召回、上下文组装和生成", "说明生成模型仍可能误读或忽略证据", "提到引用、拒答或事实核验"],
+        "common_errors": ["把 RAG 等同于向量数据库", "认为召回到文档即可保证答案正确"]
+      },
+      "version": 1,
+      "enabled": true
+    },
+    {
+      "id": "rag_junior_02",
+      "variant_group": "rag_chunking_tradeoff",
+      "direction": "ai_agent_development",
+      "focus_tags": ["rag_knowledge_application"],
+      "topic": "rag",
+      "topic_label": "RAG",
+      "difficulty": "junior",
+      "competency_tags": ["chunking", "embedding"],
+      "dimension_targets": {"foundation": 0.4, "engineering": 0.2, "problem_solving": 0.3, "communication": 0.1},
+      "stem": "文档切分时，chunk 太大和太小分别会造成什么问题？你会如何为一批技术文档选择初始切分策略？",
+      "followup_axes": ["结构化文档切分", "重叠窗口", "基于评测调参"],
+      "rubric_points": {
+        "key_points": ["说明语义完整性与检索精度的权衡", "考虑标题、段落、代码块等结构", "通过标注查询评估而不是只凭经验"],
+        "common_errors": ["只给固定字符数", "认为 overlap 越大越好"]
+      },
+      "version": 1,
+      "enabled": true
+    },
+    {
+      "id": "rag_mid_01",
+      "variant_group": "rag_recall_diagnosis",
+      "direction": "ai_agent_development",
+      "focus_tags": ["rag_knowledge_application", "agent_application_engineering"],
+      "topic": "rag",
+      "topic_label": "RAG",
+      "difficulty": "mid",
+      "competency_tags": ["retrieval_evaluation", "incident_diagnosis"],
+      "dimension_targets": {"foundation": 0.15, "engineering": 0.3, "problem_solving": 0.4, "communication": 0.15},
+      "stem": "一个已上线 RAG 系统最近频繁答非所问，离线抽样发现相关文档经常没有进入 Top-K。请按优先级说明你的排查路径。",
+      "followup_axes": ["数据与索引版本", "单路召回与融合", "重排与线上漂移"],
+      "rubric_points": {
+        "key_points": ["按数据、切分、索引、查询、召回、融合和重排分层", "使用 Recall@K 等指标建立证据", "检查变更记录并设计对照实验"],
+        "common_errors": ["直接调大 Top-K", "只检查 prompt 不检查检索链路"]
+      },
+      "version": 1,
+      "enabled": true
+    },
+    {
+      "id": "rag_mid_02",
+      "variant_group": "rag_hybrid_retrieval",
+      "direction": "ai_agent_development",
+      "focus_tags": ["rag_knowledge_application"],
+      "topic": "rag",
+      "topic_label": "RAG",
+      "difficulty": "mid",
+      "competency_tags": ["hybrid_search", "reranking"],
+      "dimension_targets": {"foundation": 0.2, "engineering": 0.3, "system_design": 0.2, "problem_solving": 0.2, "communication": 0.1},
+      "stem": "你会在什么情况下同时使用关键词召回和向量召回？请设计融合与重排方案，并说明如何判断它优于单路召回。",
+      "followup_axes": ["RRF 与加权融合", "候选集预算", "分查询类型评测"],
+      "rubric_points": {
+        "key_points": ["识别精确术语与语义匹配的互补性", "区分候选融合和重排", "使用分层查询集比较 Recall、NDCG 与任务指标"],
+        "common_errors": ["只说混合检索效果更好", "用同一权重覆盖所有查询"]
+      },
+      "version": 1,
+      "enabled": true
+    },
+    {
+      "id": "rag_senior_01",
+      "variant_group": "rag_multitenant_architecture",
+      "direction": "ai_agent_development",
+      "focus_tags": ["rag_knowledge_application", "agent_application_engineering"],
+      "topic": "rag",
+      "topic_label": "RAG",
+      "difficulty": "senior",
+      "competency_tags": ["multi_tenancy", "freshness", "security"],
+      "dimension_targets": {"engineering": 0.25, "system_design": 0.45, "problem_solving": 0.2, "communication": 0.1},
+      "stem": "请设计一个多租户企业 RAG 平台，要求分钟级知识更新、严格权限隔离、可追溯引用和可回滚索引。请说明核心组件、数据流与失败边界。",
+      "followup_axes": ["权限过滤时机", "增量索引与双写切换", "审计和回滚"],
+      "rubric_points": {
+        "key_points": ["租户与文档级授权必须进入检索链路", "设计增量索引版本与原子切换", "覆盖审计、降级、删除传播和一致性"],
+        "common_errors": ["只依赖 prompt 隔离租户", "原地覆盖索引导致无法回滚"]
+      },
+      "version": 1,
+      "enabled": true
+    },
+
+    {
+      "id": "function_junior_01",
+      "variant_group": "function_schema_basics",
+      "direction": "ai_agent_development",
+      "focus_tags": ["workflow_tool_calling", "agent_application_engineering"],
+      "topic": "function_calling",
+      "topic_label": "Function Calling",
+      "difficulty": "junior",
+      "competency_tags": ["tool_schema", "validation"],
+      "dimension_targets": {"foundation": 0.5, "engineering": 0.25, "problem_solving": 0.15, "communication": 0.1},
+      "stem": "Function Calling 中工具 schema 的作用是什么？请以查询订单工具为例，说明参数定义、校验和错误返回应如何设计。",
+      "followup_axes": ["必填与枚举", "业务错误和系统错误", "模型不可直接信任"],
+      "rubric_points": {
+        "key_points": ["schema 约束工具名、参数类型和描述", "服务端仍需独立校验和鉴权", "错误结果结构化且不泄露内部信息"],
+        "common_errors": ["认为模型生成参数后无需校验", "把异常堆栈直接返回模型"]
+      },
+      "version": 1,
+      "enabled": true
+    },
+    {
+      "id": "function_junior_02",
+      "variant_group": "function_selection_control",
+      "direction": "ai_agent_development",
+      "focus_tags": ["workflow_tool_calling"],
+      "topic": "function_calling",
+      "topic_label": "Function Calling",
+      "difficulty": "junior",
+      "competency_tags": ["tool_choice", "prompt_design"],
+      "dimension_targets": {"foundation": 0.4, "engineering": 0.25, "problem_solving": 0.25, "communication": 0.1},
+      "stem": "当 Agent 同时拥有搜索、计算和数据库查询工具时，你会如何帮助模型选对工具，并避免不必要的工具调用？",
+      "followup_axes": ["工具描述", "选择约束", "无工具回答"],
+      "rubric_points": {
+        "key_points": ["工具描述写清适用和不适用边界", "减少重叠工具并设置选择策略", "允许无需工具时直接回答"],
+        "common_errors": ["只增加 prompt 长度", "每次请求都强制调用工具"]
+      },
+      "version": 1,
+      "enabled": true
+    },
+    {
+      "id": "function_mid_01",
+      "variant_group": "function_reliability",
+      "direction": "ai_agent_development",
+      "focus_tags": ["workflow_tool_calling", "agent_application_engineering"],
+      "topic": "function_calling",
+      "topic_label": "Function Calling",
+      "difficulty": "mid",
+      "competency_tags": ["timeouts", "retries", "idempotency"],
+      "dimension_targets": {"foundation": 0.1, "engineering": 0.45, "system_design": 0.2, "problem_solving": 0.15, "communication": 0.1},
+      "stem": "如何处理 Agent 工具调用中的超时、重试与幂等？请区分只读工具和具有副作用的写入工具。",
+      "followup_axes": ["超时预算", "退避与熔断", "补偿和人工接管"],
+      "rubric_points": {
+        "key_points": ["端到端预算向下分配", "只对可重试错误有限退避", "写操作依赖幂等键或补偿并保留审计"],
+        "common_errors": ["所有错误无限重试", "把数据库事务跨越模型调用"]
+      },
+      "version": 1,
+      "enabled": true
+    },
+    {
+      "id": "function_senior_01",
+      "variant_group": "function_high_risk_approval",
+      "direction": "ai_agent_development",
+      "focus_tags": ["workflow_tool_calling", "agent_application_engineering"],
+      "topic": "function_calling",
+      "topic_label": "Function Calling",
+      "difficulty": "senior",
+      "competency_tags": ["authorization", "human_in_the_loop", "audit"],
+      "dimension_targets": {"engineering": 0.25, "system_design": 0.45, "problem_solving": 0.2, "communication": 0.1},
+      "stem": "一个 Agent 可以退款、修改客户权限并发送外部邮件。请设计高风险工具的授权、审批、执行和审计机制。",
+      "followup_axes": ["最小权限", "审批内容冻结", "重放攻击"],
+      "rubric_points": {
+        "key_points": ["按风险分级并最小授权", "审批绑定不可变参数和有效期", "执行端再次鉴权并防重放", "全链路审计与人工兜底"],
+        "common_errors": ["只在 prompt 中要求谨慎", "审批后允许模型修改执行参数"]
+      },
+      "version": 1,
+      "enabled": true
+    },
+    {
+      "id": "function_senior_02",
+      "variant_group": "function_protocol_platform",
+      "direction": "ai_agent_development",
+      "focus_tags": ["workflow_tool_calling"],
+      "topic": "function_calling",
+      "topic_label": "Function Calling",
+      "difficulty": "senior",
+      "competency_tags": ["tool_platform", "versioning", "governance"],
+      "dimension_targets": {"engineering": 0.3, "system_design": 0.45, "problem_solving": 0.15, "communication": 0.1},
+      "stem": "如果公司有数百个内部工具需要被多个 Agent 使用，你会如何设计工具注册、版本兼容、权限治理和可观测平台？",
+      "followup_axes": ["schema 版本", "能力发现", "质量门禁"],
+      "rubric_points": {
+        "key_points": ["中心注册但执行权限在服务端", "schema 版本和弃用策略", "工具级 SLO、审计和准入测试", "限制工具上下文规模"],
+        "common_errors": ["把全部工具描述一次性放入上下文", "工具升级不保留兼容窗口"]
+      },
+      "version": 1,
+      "enabled": true
+    },
+
+    {
+      "id": "langgraph_junior_01",
+      "variant_group": "langgraph_state_node_edge",
+      "direction": "ai_agent_development",
+      "focus_tags": ["workflow_tool_calling", "agent_application_engineering"],
+      "topic": "langgraph",
+      "topic_label": "LangGraph",
+      "difficulty": "junior",
+      "competency_tags": ["state_graph", "conditional_edges"],
+      "dimension_targets": {"foundation": 0.5, "engineering": 0.2, "problem_solving": 0.2, "communication": 0.1},
+      "stem": "请解释 LangGraph 中 State、节点和条件边分别负责什么，并举例说明为什么路由条件不应完全交给 LLM 自由决定。",
+      "followup_axes": ["状态字段边界", "确定性路由", "节点职责"],
+      "rubric_points": {
+        "key_points": ["State 保存跨节点业务事实", "节点做单一转换", "条件边读取结构化字段并落实硬规则"],
+        "common_errors": ["把数据库连接放进 State", "让 LLM 直接返回任意下一个节点名"]
+      },
+      "version": 1,
+      "enabled": true
+    },
+    {
+      "id": "langgraph_mid_01",
+      "variant_group": "langgraph_interrupt_resume",
+      "direction": "ai_agent_development",
+      "focus_tags": ["workflow_tool_calling", "agent_application_engineering"],
+      "topic": "langgraph",
+      "topic_label": "LangGraph",
+      "difficulty": "mid",
+      "competency_tags": ["interrupt", "checkpoint", "resume"],
+      "dimension_targets": {"foundation": 0.15, "engineering": 0.4, "system_design": 0.2, "problem_solving": 0.15, "communication": 0.1},
+      "stem": "如何使用 LangGraph 的 interrupt 和 checkpointer 实现一个等待用户回答、进程重启后仍能继续的面试流程？",
+      "followup_axes": ["thread_id", "Command resume", "interrupt 前副作用"],
+      "rubric_points": {
+        "key_points": ["稳定 thread_id 定位 checkpoint", "用 Command(resume=...) 恢复", "interrupt 前副作用必须幂等或移到独立节点", "载荷可序列化"],
+        "common_errors": ["等待期间保持 HTTP 长连接", "在 interrupt 前随机生成并写入重复数据"]
+      },
+      "version": 1,
+      "enabled": true
+    },
+    {
+      "id": "langgraph_mid_02",
+      "variant_group": "langgraph_error_recovery",
+      "direction": "ai_agent_development",
+      "focus_tags": ["workflow_tool_calling", "agent_application_engineering"],
+      "topic": "langgraph",
+      "topic_label": "LangGraph",
+      "difficulty": "mid",
+      "competency_tags": ["fault_tolerance", "idempotency"],
+      "dimension_targets": {"engineering": 0.4, "system_design": 0.2, "problem_solving": 0.3, "communication": 0.1},
+      "stem": "LangGraph 某个评分节点在调用模型后、写数据库前失败。你会如何设计重试，避免重复调用造成评分漂移或重复写入？",
+      "followup_axes": ["节点边界", "稳定业务 ID", "失败状态"],
+      "rubric_points": {
+        "key_points": ["区分外部调用和持久化边界", "使用稳定 ID 与 upsert", "持久化最终结构化结果", "失败后恢复最近 checkpoint"],
+        "common_errors": ["失败后从整场开头重跑", "用随机 ID 导致重复评价"]
+      },
+      "version": 1,
+      "enabled": true
+    },
+    {
+      "id": "langgraph_senior_01",
+      "variant_group": "langgraph_version_migration",
+      "direction": "ai_agent_development",
+      "focus_tags": ["workflow_tool_calling"],
+      "topic": "langgraph",
+      "topic_label": "LangGraph",
+      "difficulty": "senior",
+      "competency_tags": ["graph_versioning", "state_migration"],
+      "dimension_targets": {"engineering": 0.25, "system_design": 0.45, "problem_solving": 0.2, "communication": 0.1},
+      "stem": "线上已有大量暂停中的 LangGraph 会话，此时需要重构节点和 State。你会如何发布新版本并保证旧会话可以恢复？",
+      "followup_axes": ["图版本注册", "节点兼容", "State 迁移"],
+      "rubric_points": {
+        "key_points": ["新旧图版本并存", "旧会话按 graph_version 路由", "不删除旧 checkpoint 可能进入的节点", "State 只做向后兼容增加或显式迁移"],
+        "common_errors": ["部署时直接替换所有节点名", "假设 checkpoint 会自动适配字段类型变化"]
+      },
+      "version": 1,
+      "enabled": true
+    },
+    {
+      "id": "langgraph_senior_02",
+      "variant_group": "langgraph_distributed_scale",
+      "direction": "ai_agent_development",
+      "focus_tags": ["workflow_tool_calling", "agent_application_engineering"],
+      "topic": "langgraph",
+      "topic_label": "LangGraph",
+      "difficulty": "senior",
+      "competency_tags": ["distributed_systems", "concurrency_control"],
+      "dimension_targets": {"engineering": 0.25, "system_design": 0.5, "problem_solving": 0.15, "communication": 0.1},
+      "stem": "当 LangGraph 服务从单实例 SQLite 扩展到多实例部署时，哪些组件必须一起升级？请说明并发恢复同一 thread 的控制方案。",
+      "followup_axes": ["服务型数据库", "分布式锁", "队列与幂等"],
+      "rubric_points": {
+        "key_points": ["checkpoint 和业务库迁移到共享服务", "同 thread 串行化或分布式租约", "命令幂等与乐观锁", "后台任务和事件交付边界"],
+        "common_errors": ["只增加 FastAPI 副本仍使用本地 SQLite", "只靠进程内锁"]
+      },
+      "version": 1,
+      "enabled": true
+    },
+
+    {
+      "id": "multi_agent_junior_01",
+      "variant_group": "multi_agent_when_to_use",
+      "direction": "ai_agent_development",
+      "focus_tags": ["agent_application_engineering"],
+      "topic": "multi_agent",
+      "topic_label": "多 Agent 协作",
+      "difficulty": "junior",
+      "competency_tags": ["architecture_tradeoff", "role_design"],
+      "dimension_targets": {"foundation": 0.35, "system_design": 0.25, "problem_solving": 0.3, "communication": 0.1},
+      "stem": "什么情况下值得使用多个 Agent，而不是一个 Agent 加多个工具？请给出至少两个判断标准。",
+      "followup_axes": ["任务边界", "上下文隔离", "协调成本"],
+      "rubric_points": {
+        "key_points": ["角色需要不同上下文或能力边界", "可并行或需要独立审查", "承认通信、延迟和错误传播成本"],
+        "common_errors": ["认为 Agent 越多能力越强", "把普通函数拆成 Agent"]
+      },
+      "version": 1,
+      "enabled": true
+    },
+    {
+      "id": "multi_agent_junior_02",
+      "variant_group": "multi_agent_communication",
+      "direction": "ai_agent_development",
+      "focus_tags": ["agent_application_engineering"],
+      "topic": "multi_agent",
+      "topic_label": "多 Agent 协作",
+      "difficulty": "junior",
+      "competency_tags": ["message_contract", "shared_state"],
+      "dimension_targets": {"foundation": 0.35, "engineering": 0.25, "system_design": 0.2, "communication": 0.2},
+      "stem": "两个 Agent 需要协作完成研究和写作任务。你会让它们共享完整聊天记录，还是交换结构化结果？为什么？",
+      "followup_axes": ["消息 schema", "信息损失", "最小上下文"],
+      "rubric_points": {
+        "key_points": ["优先结构化交接契约", "必要时附证据引用", "避免无限复制上下文", "处理校验失败和返工"],
+        "common_errors": ["所有 Agent 共享全部历史", "只有自然语言无完成条件"]
+      },
+      "version": 1,
+      "enabled": true
+    },
+    {
+      "id": "multi_agent_mid_01",
+      "variant_group": "multi_agent_supervisor",
+      "direction": "ai_agent_development",
+      "focus_tags": ["agent_application_engineering", "workflow_tool_calling"],
+      "topic": "multi_agent",
+      "topic_label": "多 Agent 协作",
+      "difficulty": "mid",
+      "competency_tags": ["supervisor", "routing", "termination"],
+      "dimension_targets": {"engineering": 0.3, "system_design": 0.3, "problem_solving": 0.3, "communication": 0.1},
+      "stem": "请设计一个 supervisor 协调研究、数据分析和报告三个 Agent 的流程，重点说明路由、完成条件和防止无限循环的方法。",
+      "followup_axes": ["结构化任务状态", "最大步数", "返工条件"],
+      "rubric_points": {
+        "key_points": ["任务状态和产出契约结构化", "确定性完成条件与最大步数", "失败、返工和人工接管", "不让 supervisor 只凭自由文本循环"],
+        "common_errors": ["没有终止条件", "每轮都让所有 Agent 发言"]
+      },
+      "version": 1,
+      "enabled": true
+    },
+    {
+      "id": "multi_agent_mid_02",
+      "variant_group": "multi_agent_conflict_resolution",
+      "direction": "ai_agent_development",
+      "focus_tags": ["agent_application_engineering"],
+      "topic": "multi_agent",
+      "topic_label": "多 Agent 协作",
+      "difficulty": "mid",
+      "competency_tags": ["conflict_resolution", "evidence"],
+      "dimension_targets": {"engineering": 0.2, "system_design": 0.25, "problem_solving": 0.4, "communication": 0.15},
+      "stem": "两个专业 Agent 对同一结论给出相反建议。系统应如何处理冲突，而不是让第三个模型随意投票？",
+      "followup_axes": ["证据格式", "裁决规则", "不确定性"],
+      "rubric_points": {
+        "key_points": ["要求结论绑定来源和置信依据", "按领域、风险和可验证性制定裁决规则", "必要时追加实验或人工升级", "保留分歧"],
+        "common_errors": ["多数投票即真相", "隐藏冲突只输出单一结论"]
+      },
+      "version": 1,
+      "enabled": true
+    },
+    {
+      "id": "multi_agent_senior_01",
+      "variant_group": "multi_agent_reliable_orchestration",
+      "direction": "ai_agent_development",
+      "focus_tags": ["agent_application_engineering", "workflow_tool_calling"],
+      "topic": "multi_agent",
+      "topic_label": "多 Agent 协作",
+      "difficulty": "senior",
+      "competency_tags": ["distributed_workflow", "cost_control", "observability"],
+      "dimension_targets": {"engineering": 0.3, "system_design": 0.45, "problem_solving": 0.15, "communication": 0.1},
+      "stem": "请设计一个可恢复的多 Agent 长任务平台，要求支持并行执行、预算限制、局部重试、人工接管和端到端可观测。",
+      "followup_axes": ["任务 DAG", "共享状态一致性", "成本和取消传播"],
+      "rubric_points": {
+        "key_points": ["持久化任务图与节点状态", "幂等执行和局部重试", "预算、超时和取消向下传播", "trace、产出版本和人工接管"],
+        "common_errors": ["只用一个共享聊天群", "任一 Agent 失败后整场从头运行"]
+      },
+      "version": 1,
+      "enabled": true
+    },
+
+    {
+      "id": "context_junior_01",
+      "variant_group": "context_window_basics",
+      "direction": "ai_agent_development",
+      "focus_tags": ["agent_application_engineering"],
+      "topic": "context_engineering",
+      "topic_label": "上下文工程",
+      "difficulty": "junior",
+      "competency_tags": ["context_window", "prompt_composition"],
+      "dimension_targets": {"foundation": 0.5, "engineering": 0.2, "problem_solving": 0.2, "communication": 0.1},
+      "stem": "Agent 的上下文窗口很大，为什么仍不能把所有历史、文档和工具说明全部塞进去？你会优先保留什么？",
+      "followup_axes": ["注意力稀释", "成本延迟", "相关性排序"],
+      "rubric_points": {
+        "key_points": ["识别成本、延迟、噪声和注意力稀释", "优先当前目标、约束、最新状态和高相关证据", "其余信息摘要或按需检索"],
+        "common_errors": ["只考虑 token 上限", "认为窗口够大就无需管理"]
+      },
+      "version": 1,
+      "enabled": true
+    },
+    {
+      "id": "context_junior_02",
+      "variant_group": "context_memory_difference",
+      "direction": "ai_agent_development",
+      "focus_tags": ["agent_application_engineering"],
+      "topic": "context_engineering",
+      "topic_label": "上下文工程",
+      "difficulty": "junior",
+      "competency_tags": ["working_memory", "long_term_memory"],
+      "dimension_targets": {"foundation": 0.45, "engineering": 0.25, "system_design": 0.15, "communication": 0.15},
+      "stem": "请区分 Agent 的工作记忆、会话摘要和长期记忆，并说明哪些信息不应该自动写入长期记忆。",
+      "followup_axes": ["写入触发", "隐私", "过期更新"],
+      "rubric_points": {
+        "key_points": ["按生命周期和用途区分三类信息", "敏感、未经验证和短暂状态不自动长期保存", "提到去重、过期、纠错和用户控制"],
+        "common_errors": ["所有对话永久保存", "长期记忆只增不改"]
+      },
+      "version": 1,
+      "enabled": true
+    },
+    {
+      "id": "context_mid_01",
+      "variant_group": "context_compaction",
+      "direction": "ai_agent_development",
+      "focus_tags": ["agent_application_engineering", "rag_knowledge_application"],
+      "topic": "context_engineering",
+      "topic_label": "上下文工程",
+      "difficulty": "mid",
+      "competency_tags": ["summarization", "state_compaction"],
+      "dimension_targets": {"engineering": 0.35, "system_design": 0.2, "problem_solving": 0.35, "communication": 0.1},
+      "stem": "一个长任务 Agent 在第 30 轮后开始忘记约束并重复工作。你会如何设计上下文压缩，同时避免摘要丢失关键事实？",
+      "followup_axes": ["结构化状态", "不可压缩事实", "摘要验证"],
+      "rubric_points": {
+        "key_points": ["把目标、约束、决策和待办结构化保存", "原始证据保留引用而非全量复制", "增量摘要带版本并可回查", "用回放集评估信息损失"],
+        "common_errors": ["每轮重新总结全部历史", "只有自然语言摘要无来源"]
+      },
+      "version": 1,
+      "enabled": true
+    },
+    {
+      "id": "context_senior_01",
+      "variant_group": "context_injection_security",
+      "direction": "ai_agent_development",
+      "focus_tags": ["agent_application_engineering", "rag_knowledge_application"],
+      "topic": "context_engineering",
+      "topic_label": "上下文工程",
+      "difficulty": "senior",
+      "competency_tags": ["prompt_injection", "trust_boundaries"],
+      "dimension_targets": {"engineering": 0.25, "system_design": 0.4, "problem_solving": 0.25, "communication": 0.1},
+      "stem": "RAG 文档、网页搜索结果和工具返回都可能包含提示注入。请设计上下文信任边界和执行防护，避免恶意文本驱动高风险工具。",
+      "followup_axes": ["数据与指令隔离", "能力最小化", "输出验证"],
+      "rubric_points": {
+        "key_points": ["外部内容明确视为不可信数据", "工具授权和参数校验在模型外执行", "高风险动作审批与最小权限", "检测、隔离、审计和红队评测"],
+        "common_errors": ["仅靠一句忽略恶意指令", "让模型自己决定是否被注入"]
+      },
+      "version": 1,
+      "enabled": true
+    },
+    {
+      "id": "context_senior_02",
+      "variant_group": "context_budget_architecture",
+      "direction": "ai_agent_development",
+      "focus_tags": ["agent_application_engineering"],
+      "topic": "context_engineering",
+      "topic_label": "上下文工程",
+      "difficulty": "senior",
+      "competency_tags": ["token_budget", "adaptive_context"],
+      "dimension_targets": {"engineering": 0.3, "system_design": 0.4, "problem_solving": 0.2, "communication": 0.1},
+      "stem": "请设计一个自适应上下文组装器，在系统指令、工具说明、对话状态、检索证据和输出预算之间动态分配 token。",
+      "followup_axes": ["预算优先级", "裁剪策略", "质量监控"],
+      "rubric_points": {
+        "key_points": ["不可裁剪的安全与任务约束优先", "工具和证据按当前意图选择", "保留输出预算并考虑模型上下文限制", "记录组装决策并做消融评测"],
+        "common_errors": ["固定比例适用于所有任务", "裁剪后不记录被移除信息"]
+      },
+      "version": 1,
+      "enabled": true
+    },
+
+    {
+      "id": "evaluation_junior_01",
+      "variant_group": "evaluation_metric_basics",
+      "direction": "ai_agent_development",
+      "focus_tags": ["agent_application_engineering", "rag_knowledge_application"],
+      "topic": "agent_evaluation",
+      "topic_label": "Agent 评估",
+      "difficulty": "junior",
+      "competency_tags": ["offline_evaluation", "task_success"],
+      "dimension_targets": {"foundation": 0.45, "engineering": 0.2, "problem_solving": 0.25, "communication": 0.1},
+      "stem": "评估 Agent 时，为什么只看最终回答的语言流畅度不够？请给出至少四类需要观察的指标。",
+      "followup_axes": ["任务成功", "工具轨迹", "安全与成本"],
+      "rubric_points": {
+        "key_points": ["任务正确性或成功率", "工具选择和参数正确率", "安全违规与事实一致性", "延迟、token 和成本", "必要时人工评审"],
+        "common_errors": ["只用另一个 LLM 打分", "忽略过程错误和成本"]
+      },
+      "version": 1,
+      "enabled": true
+    },
+    {
+      "id": "evaluation_mid_01",
+      "variant_group": "evaluation_dataset_design",
+      "direction": "ai_agent_development",
+      "focus_tags": ["agent_application_engineering"],
+      "topic": "agent_evaluation",
+      "topic_label": "Agent 评估",
+      "difficulty": "mid",
+      "competency_tags": ["evaluation_dataset", "regression"],
+      "dimension_targets": {"engineering": 0.25, "system_design": 0.2, "problem_solving": 0.45, "communication": 0.1},
+      "stem": "你会如何构建一个 Agent 离线评测集，使它既能做版本回归，又不会只覆盖理想的正常请求？",
+      "followup_axes": ["分层采样", "失败样本", "版本治理"],
+      "rubric_points": {
+        "key_points": ["按任务、用户和风险分层", "包含边界、异常、注入和历史事故样本", "冻结核心集并版本化扩展集", "防止训练数据污染"],
+        "common_errors": ["只收集成功案例", "每次版本使用不同样本导致不可比"]
+      },
+      "version": 1,
+      "enabled": true
+    },
+    {
+      "id": "evaluation_mid_02",
+      "variant_group": "evaluation_llm_judge",
+      "direction": "ai_agent_development",
+      "focus_tags": ["agent_application_engineering", "rag_knowledge_application"],
+      "topic": "agent_evaluation",
+      "topic_label": "Agent 评估",
+      "difficulty": "mid",
+      "competency_tags": ["llm_as_judge", "rubric"],
+      "dimension_targets": {"foundation": 0.15, "engineering": 0.25, "problem_solving": 0.45, "communication": 0.15},
+      "stem": "使用 LLM-as-a-Judge 评估 Agent 输出时，如何降低评分漂移、长度偏好和无证据判断？",
+      "followup_axes": ["rubric 锚点", "结构化输出", "人工校准"],
+      "rubric_points": {
+        "key_points": ["固定维度与分档锚点", "要求引用可核对证据并结构化输出", "控制模型和随机性", "用人工标注集校准一致性"],
+        "common_errors": ["换更强模型即可稳定", "让 judge 自由生成总分"]
+      },
+      "version": 1,
+      "enabled": true
+    },
+    {
+      "id": "evaluation_senior_01",
+      "variant_group": "evaluation_release_gate",
+      "direction": "ai_agent_development",
+      "focus_tags": ["agent_application_engineering", "workflow_tool_calling"],
+      "topic": "agent_evaluation",
+      "topic_label": "Agent 评估",
+      "difficulty": "senior",
+      "competency_tags": ["release_gate", "online_monitoring"],
+      "dimension_targets": {"engineering": 0.3, "system_design": 0.4, "problem_solving": 0.2, "communication": 0.1},
+      "stem": "如何评估一个 Agent 系统是否可以上线？请设计从离线回归、红队、灰度到线上回滚的完整发布门禁。",
+      "followup_axes": ["指标阈值", "风险分级", "回滚动作"],
+      "rubric_points": {
+        "key_points": ["质量、安全、可靠性和成本多维门禁", "高风险场景零容忍或更严格阈值", "灰度对照和线上告警", "指标绑定停止、回滚或人工接管动作"],
+        "common_errors": ["只列指标不设阈值", "上线后只有监控没有回滚"]
+      },
+      "version": 1,
+      "enabled": true
+    },
+    {
+      "id": "evaluation_senior_02",
+      "variant_group": "evaluation_continuous_loop",
+      "direction": "ai_agent_development",
+      "focus_tags": ["agent_application_engineering"],
+      "topic": "agent_evaluation",
+      "topic_label": "Agent 评估",
+      "difficulty": "senior",
+      "competency_tags": ["continuous_evaluation", "observability", "governance"],
+      "dimension_targets": {"engineering": 0.3, "system_design": 0.4, "problem_solving": 0.2, "communication": 0.1},
+      "stem": "请设计 Agent 的持续评测闭环：如何从线上 trace 和用户反馈发现问题、形成回归样本、验证修复并避免指标被优化失真？",
+      "followup_axes": ["数据回流", "根因分类", "指标博弈"],
+      "rubric_points": {
+        "key_points": ["trace 与反馈可关联到版本和任务", "失败聚类后人工确认根因", "样本进入版本化回归集", "设置护栏指标和抽检防止过拟合或指标博弈"],
+        "common_errors": ["所有用户差评直接当标签", "只优化单一自动评分"]
+      },
+      "version": 1,
+      "enabled": true
+    }
+  ]
+}
+
