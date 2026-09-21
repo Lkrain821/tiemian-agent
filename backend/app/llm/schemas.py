@@ -42,10 +42,10 @@ class EvidenceItem(StrictModel):
 class QuestionEvaluation(StrictModel):
     dimension_scores: dict[DimensionCode, float]
     evidence: list[EvidenceItem]
-    strengths: list[str] = Field(min_length=1, max_length=4)
-    gaps: list[str] = Field(min_length=1, max_length=4)
-    improvement: str = Field(min_length=1, max_length=800)
-    better_answer_outline: list[str] = Field(min_length=1, max_length=5)
+    strengths: list[str] = Field(min_length=0, max_length=4)
+    gaps: list[str] = Field(min_length=0, max_length=4)
+    improvement: str = Field(min_length=0, max_length=800)
+    better_answer_outline: list[str] = Field(min_length=0, max_length=5)
     confidence: float = Field(ge=0, le=1)
 
     @model_validator(mode="after")
