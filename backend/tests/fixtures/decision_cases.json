@@ -1,0 +1,2120 @@
+{
+  "version": "1",
+  "label_status": "synthetic_unreviewed_not_human_ground_truth",
+  "cases": [
+    {
+      "id": "checkpoint_complete",
+      "category": "complete",
+      "question": {
+        "stem": "LangGraph 服务中途重启后如何恢复等待中的面试？",
+        "rubric_points": {
+          "key_points": [
+            "持久化 checkpoint",
+            "使用相同 thread_id 恢复 interrupt",
+            "外部副作用幂等"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "LangGraph 服务中途重启后如何恢复等待中的面试？",
+          "id": "checkpoint_complete_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "把状态快照写入持久化 SQLite，而不是只存在内存。重启时加载同一 thread_id 的检查点，通过 Command(resume=答案) 恢复等待节点。写库和工具调用使用业务幂等键，重放节点时不重复执行副作用。",
+          "id": "checkpoint_complete_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": false,
+        "target": null
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "checkpoint_partial",
+      "category": "partial",
+      "question": {
+        "stem": "LangGraph 服务中途重启后如何恢复等待中的面试？",
+        "rubric_points": {
+          "key_points": [
+            "持久化 checkpoint",
+            "使用相同 thread_id 恢复 interrupt",
+            "外部副作用幂等"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "LangGraph 服务中途重启后如何恢复等待中的面试？",
+          "id": "checkpoint_partial_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "把状态快照写入持久化 SQLite，而不是只存在内存。重启时加载同一 thread_id 的检查点，通过 Command(resume=答案) 恢复等待节点。",
+          "id": "checkpoint_partial_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_2"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "checkpoint_short",
+      "category": "short",
+      "question": {
+        "stem": "LangGraph 服务中途重启后如何恢复等待中的面试？",
+        "rubric_points": {
+          "key_points": [
+            "持久化 checkpoint",
+            "使用相同 thread_id 恢复 interrupt",
+            "外部副作用幂等"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "LangGraph 服务中途重启后如何恢复等待中的面试？",
+          "id": "checkpoint_short_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "持久化 checkpoint。",
+          "id": "checkpoint_short_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "checkpoint_off_topic",
+      "category": "off_topic",
+      "question": {
+        "stem": "LangGraph 服务中途重启后如何恢复等待中的面试？",
+        "rubric_points": {
+          "key_points": [
+            "持久化 checkpoint",
+            "使用相同 thread_id 恢复 interrupt",
+            "外部副作用幂等"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "LangGraph 服务中途重启后如何恢复等待中的面试？",
+          "id": "checkpoint_off_topic_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "我昨天在看篮球比赛，这个问题和比赛结果有什么关系？",
+          "id": "checkpoint_off_topic_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_0"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "checkpoint_misconception",
+      "category": "misconception",
+      "question": {
+        "stem": "LangGraph 服务中途重启后如何恢复等待中的面试？",
+        "rubric_points": {
+          "key_points": [
+            "持久化 checkpoint",
+            "使用相同 thread_id 恢复 interrupt",
+            "外部副作用幂等"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "LangGraph 服务中途重启后如何恢复等待中的面试？",
+          "id": "checkpoint_misconception_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "只用内存 MemorySaver 就能在操作系统重启后恢复。",
+          "id": "checkpoint_misconception_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_0"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "checkpoint_missing_engineering",
+      "category": "missing_engineering",
+      "question": {
+        "stem": "LangGraph 服务中途重启后如何恢复等待中的面试？",
+        "rubric_points": {
+          "key_points": [
+            "持久化 checkpoint",
+            "使用相同 thread_id 恢复 interrupt",
+            "外部副作用幂等"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "LangGraph 服务中途重启后如何恢复等待中的面试？",
+          "id": "checkpoint_missing_engineering_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "把状态快照写入持久化 SQLite，而不是只存在内存。重启时加载同一 thread_id 的检查点，通过 Command(resume=答案) 恢复等待节点。，具体异常处理还没有设计。",
+          "id": "checkpoint_missing_engineering_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_2"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "checkpoint_resolved_after_followup",
+      "category": "resolved_after_followup",
+      "question": {
+        "stem": "LangGraph 服务中途重启后如何恢复等待中的面试？",
+        "rubric_points": {
+          "key_points": [
+            "持久化 checkpoint",
+            "使用相同 thread_id 恢复 interrupt",
+            "外部副作用幂等"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "LangGraph 服务中途重启后如何恢复等待中的面试？",
+          "id": "checkpoint_resolved_after_followup_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "把状态快照写入持久化 SQLite，而不是只存在内存。重启时加载同一 thread_id 的检查点，通过 Command(resume=答案) 恢复等待节点。",
+          "id": "checkpoint_resolved_after_followup_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        },
+        {
+          "role": "interviewer",
+          "content": "恢复是否会重新发送已经提交过的请求？",
+          "id": "checkpoint_resolved_after_followup_turn_2",
+          "kind": "followup",
+          "followup_level": 1
+        },
+        {
+          "role": "candidate",
+          "content": "写库和工具调用使用业务幂等键，重放节点时不重复执行副作用。",
+          "id": "checkpoint_resolved_after_followup_turn_3",
+          "kind": "answer",
+          "followup_level": 1
+        }
+      ],
+      "followup_count": 1,
+      "expected": {
+        "followup": false,
+        "target": null
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "checkpoint_multiple_gaps",
+      "category": "multiple_gaps",
+      "question": {
+        "stem": "LangGraph 服务中途重启后如何恢复等待中的面试？",
+        "rubric_points": {
+          "key_points": [
+            "持久化 checkpoint",
+            "使用相同 thread_id 恢复 interrupt",
+            "外部副作用幂等"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "LangGraph 服务中途重启后如何恢复等待中的面试？",
+          "id": "checkpoint_multiple_gaps_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "把状态快照写入持久化 SQLite，而不是只存在内存。其余部分暂时没有考虑。",
+          "id": "checkpoint_multiple_gaps_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "rag_complete",
+      "category": "complete",
+      "question": {
+        "stem": "如何构建可验证的基础 RAG 回答链路？",
+        "rubric_points": {
+          "key_points": [
+            "切分向量化索引和召回",
+            "证据组装与生成职责",
+            "空召回及事实核验"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何构建可验证的基础 RAG 回答链路？",
+          "id": "rag_complete_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "按文档结构切分、向量化并建立索引，再对查询召回相关片段。把召回片段作为证据组装进上下文，生成器据此组织答案，但召回并不保证生成内容正确。空召回时拒答或澄清，检查答案中的事实与引用片段是否一致。",
+          "id": "rag_complete_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": false,
+        "target": null
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "rag_partial",
+      "category": "partial",
+      "question": {
+        "stem": "如何构建可验证的基础 RAG 回答链路？",
+        "rubric_points": {
+          "key_points": [
+            "切分向量化索引和召回",
+            "证据组装与生成职责",
+            "空召回及事实核验"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何构建可验证的基础 RAG 回答链路？",
+          "id": "rag_partial_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "按文档结构切分、向量化并建立索引，再对查询召回相关片段。把召回片段作为证据组装进上下文，生成器据此组织答案，但召回并不保证生成内容正确。",
+          "id": "rag_partial_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_2"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "rag_short",
+      "category": "short",
+      "question": {
+        "stem": "如何构建可验证的基础 RAG 回答链路？",
+        "rubric_points": {
+          "key_points": [
+            "切分向量化索引和召回",
+            "证据组装与生成职责",
+            "空召回及事实核验"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何构建可验证的基础 RAG 回答链路？",
+          "id": "rag_short_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "切分向量化索引和召回。",
+          "id": "rag_short_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "rag_off_topic",
+      "category": "off_topic",
+      "question": {
+        "stem": "如何构建可验证的基础 RAG 回答链路？",
+        "rubric_points": {
+          "key_points": [
+            "切分向量化索引和召回",
+            "证据组装与生成职责",
+            "空召回及事实核验"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何构建可验证的基础 RAG 回答链路？",
+          "id": "rag_off_topic_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "我昨天在看篮球比赛，这个问题和比赛结果有什么关系？",
+          "id": "rag_off_topic_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_0"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "rag_misconception",
+      "category": "misconception",
+      "question": {
+        "stem": "如何构建可验证的基础 RAG 回答链路？",
+        "rubric_points": {
+          "key_points": [
+            "切分向量化索引和召回",
+            "证据组装与生成职责",
+            "空召回及事实核验"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何构建可验证的基础 RAG 回答链路？",
+          "id": "rag_misconception_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "只要向量库返回了相关文档，生成的每句话就保证正确。",
+          "id": "rag_misconception_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "rag_missing_engineering",
+      "category": "missing_engineering",
+      "question": {
+        "stem": "如何构建可验证的基础 RAG 回答链路？",
+        "rubric_points": {
+          "key_points": [
+            "切分向量化索引和召回",
+            "证据组装与生成职责",
+            "空召回及事实核验"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何构建可验证的基础 RAG 回答链路？",
+          "id": "rag_missing_engineering_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "按文档结构切分、向量化并建立索引，再对查询召回相关片段。把召回片段作为证据组装进上下文，生成器据此组织答案，但召回并不保证生成内容正确。，具体异常处理还没有设计。",
+          "id": "rag_missing_engineering_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_2"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "rag_resolved_after_followup",
+      "category": "resolved_after_followup",
+      "question": {
+        "stem": "如何构建可验证的基础 RAG 回答链路？",
+        "rubric_points": {
+          "key_points": [
+            "切分向量化索引和召回",
+            "证据组装与生成职责",
+            "空召回及事实核验"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何构建可验证的基础 RAG 回答链路？",
+          "id": "rag_resolved_after_followup_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "按文档结构切分、向量化并建立索引，再对查询召回相关片段。把召回片段作为证据组装进上下文，生成器据此组织答案，但召回并不保证生成内容正确。",
+          "id": "rag_resolved_after_followup_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        },
+        {
+          "role": "interviewer",
+          "content": "找不到证据时要怎么处理？",
+          "id": "rag_resolved_after_followup_turn_2",
+          "kind": "followup",
+          "followup_level": 1
+        },
+        {
+          "role": "candidate",
+          "content": "空召回时拒答或澄清，检查答案中的事实与引用片段是否一致。",
+          "id": "rag_resolved_after_followup_turn_3",
+          "kind": "answer",
+          "followup_level": 1
+        }
+      ],
+      "followup_count": 1,
+      "expected": {
+        "followup": false,
+        "target": null
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "rag_multiple_gaps",
+      "category": "multiple_gaps",
+      "question": {
+        "stem": "如何构建可验证的基础 RAG 回答链路？",
+        "rubric_points": {
+          "key_points": [
+            "切分向量化索引和召回",
+            "证据组装与生成职责",
+            "空召回及事实核验"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何构建可验证的基础 RAG 回答链路？",
+          "id": "rag_multiple_gaps_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "按文档结构切分、向量化并建立索引，再对查询召回相关片段。其余部分暂时没有考虑。",
+          "id": "rag_multiple_gaps_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "idempotency_complete",
+      "category": "complete",
+      "question": {
+        "stem": "如何防止接口超时重试导致订单被重复创建？",
+        "rubric_points": {
+          "key_points": [
+            "业务幂等键标识同一操作",
+            "唯一约束和结果持久化",
+            "并发及不同请求体冲突"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何防止接口超时重试导致订单被重复创建？",
+          "id": "idempotency_complete_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "客户端为同一次业务操作复用幂等键，重试不生成新键。服务端通过唯一约束原子占位并保存结果，重复请求返回原结果。并发请求只允许一个执行者，同键不同请求体返回冲突，未完成请求有明确恢复状态。",
+          "id": "idempotency_complete_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": false,
+        "target": null
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "idempotency_partial",
+      "category": "partial",
+      "question": {
+        "stem": "如何防止接口超时重试导致订单被重复创建？",
+        "rubric_points": {
+          "key_points": [
+            "业务幂等键标识同一操作",
+            "唯一约束和结果持久化",
+            "并发及不同请求体冲突"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何防止接口超时重试导致订单被重复创建？",
+          "id": "idempotency_partial_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "客户端为同一次业务操作复用幂等键，重试不生成新键。服务端通过唯一约束原子占位并保存结果，重复请求返回原结果。",
+          "id": "idempotency_partial_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_2"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "idempotency_short",
+      "category": "short",
+      "question": {
+        "stem": "如何防止接口超时重试导致订单被重复创建？",
+        "rubric_points": {
+          "key_points": [
+            "业务幂等键标识同一操作",
+            "唯一约束和结果持久化",
+            "并发及不同请求体冲突"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何防止接口超时重试导致订单被重复创建？",
+          "id": "idempotency_short_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "业务幂等键标识同一操作。",
+          "id": "idempotency_short_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "idempotency_off_topic",
+      "category": "off_topic",
+      "question": {
+        "stem": "如何防止接口超时重试导致订单被重复创建？",
+        "rubric_points": {
+          "key_points": [
+            "业务幂等键标识同一操作",
+            "唯一约束和结果持久化",
+            "并发及不同请求体冲突"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何防止接口超时重试导致订单被重复创建？",
+          "id": "idempotency_off_topic_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "我昨天在看篮球比赛，这个问题和比赛结果有什么关系？",
+          "id": "idempotency_off_topic_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_0"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "idempotency_misconception",
+      "category": "misconception",
+      "question": {
+        "stem": "如何防止接口超时重试导致订单被重复创建？",
+        "rubric_points": {
+          "key_points": [
+            "业务幂等键标识同一操作",
+            "唯一约束和结果持久化",
+            "并发及不同请求体冲突"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何防止接口超时重试导致订单被重复创建？",
+          "id": "idempotency_misconception_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "每次重试都生成一个新的随机幂等键，就不会重复下单。",
+          "id": "idempotency_misconception_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_0"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "idempotency_missing_engineering",
+      "category": "missing_engineering",
+      "question": {
+        "stem": "如何防止接口超时重试导致订单被重复创建？",
+        "rubric_points": {
+          "key_points": [
+            "业务幂等键标识同一操作",
+            "唯一约束和结果持久化",
+            "并发及不同请求体冲突"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何防止接口超时重试导致订单被重复创建？",
+          "id": "idempotency_missing_engineering_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "客户端为同一次业务操作复用幂等键，重试不生成新键。服务端通过唯一约束原子占位并保存结果，重复请求返回原结果。，具体异常处理还没有设计。",
+          "id": "idempotency_missing_engineering_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_2"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "idempotency_resolved_after_followup",
+      "category": "resolved_after_followup",
+      "question": {
+        "stem": "如何防止接口超时重试导致订单被重复创建？",
+        "rubric_points": {
+          "key_points": [
+            "业务幂等键标识同一操作",
+            "唯一约束和结果持久化",
+            "并发及不同请求体冲突"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何防止接口超时重试导致订单被重复创建？",
+          "id": "idempotency_resolved_after_followup_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "客户端为同一次业务操作复用幂等键，重试不生成新键。服务端通过唯一约束原子占位并保存结果，重复请求返回原结果。",
+          "id": "idempotency_resolved_after_followup_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        },
+        {
+          "role": "interviewer",
+          "content": "两个请求同时使用同一个键会怎样？",
+          "id": "idempotency_resolved_after_followup_turn_2",
+          "kind": "followup",
+          "followup_level": 1
+        },
+        {
+          "role": "candidate",
+          "content": "并发请求只允许一个执行者，同键不同请求体返回冲突，未完成请求有明确恢复状态。",
+          "id": "idempotency_resolved_after_followup_turn_3",
+          "kind": "answer",
+          "followup_level": 1
+        }
+      ],
+      "followup_count": 1,
+      "expected": {
+        "followup": false,
+        "target": null
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "idempotency_multiple_gaps",
+      "category": "multiple_gaps",
+      "question": {
+        "stem": "如何防止接口超时重试导致订单被重复创建？",
+        "rubric_points": {
+          "key_points": [
+            "业务幂等键标识同一操作",
+            "唯一约束和结果持久化",
+            "并发及不同请求体冲突"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何防止接口超时重试导致订单被重复创建？",
+          "id": "idempotency_multiple_gaps_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "客户端为同一次业务操作复用幂等键，重试不生成新键。其余部分暂时没有考虑。",
+          "id": "idempotency_multiple_gaps_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "tools_complete",
+      "category": "complete",
+      "question": {
+        "stem": "如何安全地让 Agent 调用一个有副作用的外部工具？",
+        "rubric_points": {
+          "key_points": [
+            "工具参数 schema 校验",
+            "身份授权和最小权限",
+            "超时重试与幂等"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何安全地让 Agent 调用一个有副作用的外部工具？",
+          "id": "tools_complete_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "为工具定义严格参数 schema，在执行前校验类型和边界。根据用户身份检查工具权限，使用最小权限凭据，高风险动作需要明确授权。设置超时并区分可重试错误，有副作用的请求使用幂等键避免重复执行。",
+          "id": "tools_complete_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": false,
+        "target": null
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "tools_partial",
+      "category": "partial",
+      "question": {
+        "stem": "如何安全地让 Agent 调用一个有副作用的外部工具？",
+        "rubric_points": {
+          "key_points": [
+            "工具参数 schema 校验",
+            "身份授权和最小权限",
+            "超时重试与幂等"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何安全地让 Agent 调用一个有副作用的外部工具？",
+          "id": "tools_partial_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "为工具定义严格参数 schema，在执行前校验类型和边界。根据用户身份检查工具权限，使用最小权限凭据，高风险动作需要明确授权。",
+          "id": "tools_partial_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_2"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "tools_short",
+      "category": "short",
+      "question": {
+        "stem": "如何安全地让 Agent 调用一个有副作用的外部工具？",
+        "rubric_points": {
+          "key_points": [
+            "工具参数 schema 校验",
+            "身份授权和最小权限",
+            "超时重试与幂等"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何安全地让 Agent 调用一个有副作用的外部工具？",
+          "id": "tools_short_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "工具参数 schema 校验。",
+          "id": "tools_short_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "tools_off_topic",
+      "category": "off_topic",
+      "question": {
+        "stem": "如何安全地让 Agent 调用一个有副作用的外部工具？",
+        "rubric_points": {
+          "key_points": [
+            "工具参数 schema 校验",
+            "身份授权和最小权限",
+            "超时重试与幂等"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何安全地让 Agent 调用一个有副作用的外部工具？",
+          "id": "tools_off_topic_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "我昨天在看篮球比赛，这个问题和比赛结果有什么关系？",
+          "id": "tools_off_topic_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_0"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "tools_misconception",
+      "category": "misconception",
+      "question": {
+        "stem": "如何安全地让 Agent 调用一个有副作用的外部工具？",
+        "rubric_points": {
+          "key_points": [
+            "工具参数 schema 校验",
+            "身份授权和最小权限",
+            "超时重试与幂等"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何安全地让 Agent 调用一个有副作用的外部工具？",
+          "id": "tools_misconception_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "模型生成了合法 JSON，就代表用户已经授权所有工具操作。",
+          "id": "tools_misconception_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "tools_missing_engineering",
+      "category": "missing_engineering",
+      "question": {
+        "stem": "如何安全地让 Agent 调用一个有副作用的外部工具？",
+        "rubric_points": {
+          "key_points": [
+            "工具参数 schema 校验",
+            "身份授权和最小权限",
+            "超时重试与幂等"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何安全地让 Agent 调用一个有副作用的外部工具？",
+          "id": "tools_missing_engineering_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "为工具定义严格参数 schema，在执行前校验类型和边界。根据用户身份检查工具权限，使用最小权限凭据，高风险动作需要明确授权。，具体异常处理还没有设计。",
+          "id": "tools_missing_engineering_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_2"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "tools_resolved_after_followup",
+      "category": "resolved_after_followup",
+      "question": {
+        "stem": "如何安全地让 Agent 调用一个有副作用的外部工具？",
+        "rubric_points": {
+          "key_points": [
+            "工具参数 schema 校验",
+            "身份授权和最小权限",
+            "超时重试与幂等"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何安全地让 Agent 调用一个有副作用的外部工具？",
+          "id": "tools_resolved_after_followup_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "为工具定义严格参数 schema，在执行前校验类型和边界。根据用户身份检查工具权限，使用最小权限凭据，高风险动作需要明确授权。",
+          "id": "tools_resolved_after_followup_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        },
+        {
+          "role": "interviewer",
+          "content": "工具执行成功但响应丢失后能直接重试吗？",
+          "id": "tools_resolved_after_followup_turn_2",
+          "kind": "followup",
+          "followup_level": 1
+        },
+        {
+          "role": "candidate",
+          "content": "设置超时并区分可重试错误，有副作用的请求使用幂等键避免重复执行。",
+          "id": "tools_resolved_after_followup_turn_3",
+          "kind": "answer",
+          "followup_level": 1
+        }
+      ],
+      "followup_count": 1,
+      "expected": {
+        "followup": false,
+        "target": null
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "tools_multiple_gaps",
+      "category": "multiple_gaps",
+      "question": {
+        "stem": "如何安全地让 Agent 调用一个有副作用的外部工具？",
+        "rubric_points": {
+          "key_points": [
+            "工具参数 schema 校验",
+            "身份授权和最小权限",
+            "超时重试与幂等"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何安全地让 Agent 调用一个有副作用的外部工具？",
+          "id": "tools_multiple_gaps_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "为工具定义严格参数 schema，在执行前校验类型和边界。其余部分暂时没有考虑。",
+          "id": "tools_multiple_gaps_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "retrieval_complete",
+      "category": "complete",
+      "question": {
+        "stem": "相关文档没有进入 RAG 的 Top-K，你如何排查？",
+        "rubric_points": {
+          "key_points": [
+            "分层排查数据索引与召回",
+            "标注查询和 Recall@K",
+            "变更对照及回滚"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "相关文档没有进入 RAG 的 Top-K，你如何排查？",
+          "id": "retrieval_complete_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "先核对文档是否入库、切分是否完整、索引版本是否匹配，再查看查询改写和召回过滤。用带相关文档标签的查询集计算 Recall@K，并查看失败样本。对比变更前后的索引和召回配置，做对照实验，退化时回滚已验证的版本。",
+          "id": "retrieval_complete_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": false,
+        "target": null
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "retrieval_partial",
+      "category": "partial",
+      "question": {
+        "stem": "相关文档没有进入 RAG 的 Top-K，你如何排查？",
+        "rubric_points": {
+          "key_points": [
+            "分层排查数据索引与召回",
+            "标注查询和 Recall@K",
+            "变更对照及回滚"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "相关文档没有进入 RAG 的 Top-K，你如何排查？",
+          "id": "retrieval_partial_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "先核对文档是否入库、切分是否完整、索引版本是否匹配，再查看查询改写和召回过滤。用带相关文档标签的查询集计算 Recall@K，并查看失败样本。",
+          "id": "retrieval_partial_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_2"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "retrieval_short",
+      "category": "short",
+      "question": {
+        "stem": "相关文档没有进入 RAG 的 Top-K，你如何排查？",
+        "rubric_points": {
+          "key_points": [
+            "分层排查数据索引与召回",
+            "标注查询和 Recall@K",
+            "变更对照及回滚"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "相关文档没有进入 RAG 的 Top-K，你如何排查？",
+          "id": "retrieval_short_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "分层排查数据索引与召回。",
+          "id": "retrieval_short_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "retrieval_off_topic",
+      "category": "off_topic",
+      "question": {
+        "stem": "相关文档没有进入 RAG 的 Top-K，你如何排查？",
+        "rubric_points": {
+          "key_points": [
+            "分层排查数据索引与召回",
+            "标注查询和 Recall@K",
+            "变更对照及回滚"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "相关文档没有进入 RAG 的 Top-K，你如何排查？",
+          "id": "retrieval_off_topic_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "我昨天在看篮球比赛，这个问题和比赛结果有什么关系？",
+          "id": "retrieval_off_topic_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_0"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "retrieval_misconception",
+      "category": "misconception",
+      "question": {
+        "stem": "相关文档没有进入 RAG 的 Top-K，你如何排查？",
+        "rubric_points": {
+          "key_points": [
+            "分层排查数据索引与召回",
+            "标注查询和 Recall@K",
+            "变更对照及回滚"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "相关文档没有进入 RAG 的 Top-K，你如何排查？",
+          "id": "retrieval_misconception_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "只需要修改生成 prompt，检索阶段就一定能召回缺失文档。",
+          "id": "retrieval_misconception_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_0"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "retrieval_missing_engineering",
+      "category": "missing_engineering",
+      "question": {
+        "stem": "相关文档没有进入 RAG 的 Top-K，你如何排查？",
+        "rubric_points": {
+          "key_points": [
+            "分层排查数据索引与召回",
+            "标注查询和 Recall@K",
+            "变更对照及回滚"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "相关文档没有进入 RAG 的 Top-K，你如何排查？",
+          "id": "retrieval_missing_engineering_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "先核对文档是否入库、切分是否完整、索引版本是否匹配，再查看查询改写和召回过滤。用带相关文档标签的查询集计算 Recall@K，并查看失败样本。，具体异常处理还没有设计。",
+          "id": "retrieval_missing_engineering_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_2"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "retrieval_resolved_after_followup",
+      "category": "resolved_after_followup",
+      "question": {
+        "stem": "相关文档没有进入 RAG 的 Top-K，你如何排查？",
+        "rubric_points": {
+          "key_points": [
+            "分层排查数据索引与召回",
+            "标注查询和 Recall@K",
+            "变更对照及回滚"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "相关文档没有进入 RAG 的 Top-K，你如何排查？",
+          "id": "retrieval_resolved_after_followup_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "先核对文档是否入库、切分是否完整、索引版本是否匹配，再查看查询改写和召回过滤。用带相关文档标签的查询集计算 Recall@K，并查看失败样本。",
+          "id": "retrieval_resolved_after_followup_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        },
+        {
+          "role": "interviewer",
+          "content": "怎么证明排查后的修改确实改善了召回？",
+          "id": "retrieval_resolved_after_followup_turn_2",
+          "kind": "followup",
+          "followup_level": 1
+        },
+        {
+          "role": "candidate",
+          "content": "对比变更前后的索引和召回配置，做对照实验，退化时回滚已验证的版本。",
+          "id": "retrieval_resolved_after_followup_turn_3",
+          "kind": "answer",
+          "followup_level": 1
+        }
+      ],
+      "followup_count": 1,
+      "expected": {
+        "followup": false,
+        "target": null
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "retrieval_multiple_gaps",
+      "category": "multiple_gaps",
+      "question": {
+        "stem": "相关文档没有进入 RAG 的 Top-K，你如何排查？",
+        "rubric_points": {
+          "key_points": [
+            "分层排查数据索引与召回",
+            "标注查询和 Recall@K",
+            "变更对照及回滚"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "相关文档没有进入 RAG 的 Top-K，你如何排查？",
+          "id": "retrieval_multiple_gaps_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "先核对文档是否入库、切分是否完整、索引版本是否匹配，再查看查询改写和召回过滤。其余部分暂时没有考虑。",
+          "id": "retrieval_multiple_gaps_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "stream_complete",
+      "category": "complete",
+      "question": {
+        "stem": "如何让流式接口断线后的客户端恢复可靠状态？",
+        "rubric_points": {
+          "key_points": [
+            "事件标识与持久化",
+            "重连后快照或事件补放",
+            "完成事件和重复事件处理"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何让流式接口断线后的客户端恢复可靠状态？",
+          "id": "stream_complete_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "为事件分配稳定序号并记录业务结果，不能仅把内存流当作权威状态。重连时先获取最新快照，或者按最后已确认的事件序号补放。以明确完成事件结束操作，并按事件标识去重，避免断线重试重复提交答案。",
+          "id": "stream_complete_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": false,
+        "target": null
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "stream_partial",
+      "category": "partial",
+      "question": {
+        "stem": "如何让流式接口断线后的客户端恢复可靠状态？",
+        "rubric_points": {
+          "key_points": [
+            "事件标识与持久化",
+            "重连后快照或事件补放",
+            "完成事件和重复事件处理"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何让流式接口断线后的客户端恢复可靠状态？",
+          "id": "stream_partial_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "为事件分配稳定序号并记录业务结果，不能仅把内存流当作权威状态。重连时先获取最新快照，或者按最后已确认的事件序号补放。",
+          "id": "stream_partial_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_2"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "stream_short",
+      "category": "short",
+      "question": {
+        "stem": "如何让流式接口断线后的客户端恢复可靠状态？",
+        "rubric_points": {
+          "key_points": [
+            "事件标识与持久化",
+            "重连后快照或事件补放",
+            "完成事件和重复事件处理"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何让流式接口断线后的客户端恢复可靠状态？",
+          "id": "stream_short_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "事件标识与持久化。",
+          "id": "stream_short_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "stream_off_topic",
+      "category": "off_topic",
+      "question": {
+        "stem": "如何让流式接口断线后的客户端恢复可靠状态？",
+        "rubric_points": {
+          "key_points": [
+            "事件标识与持久化",
+            "重连后快照或事件补放",
+            "完成事件和重复事件处理"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何让流式接口断线后的客户端恢复可靠状态？",
+          "id": "stream_off_topic_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "我昨天在看篮球比赛，这个问题和比赛结果有什么关系？",
+          "id": "stream_off_topic_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_0"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "stream_misconception",
+      "category": "misconception",
+      "question": {
+        "stem": "如何让流式接口断线后的客户端恢复可靠状态？",
+        "rubric_points": {
+          "key_points": [
+            "事件标识与持久化",
+            "重连后快照或事件补放",
+            "完成事件和重复事件处理"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何让流式接口断线后的客户端恢复可靠状态？",
+          "id": "stream_misconception_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "TCP 会自动恢复服务进程重启前的全部流式事件。",
+          "id": "stream_misconception_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_0"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "stream_missing_engineering",
+      "category": "missing_engineering",
+      "question": {
+        "stem": "如何让流式接口断线后的客户端恢复可靠状态？",
+        "rubric_points": {
+          "key_points": [
+            "事件标识与持久化",
+            "重连后快照或事件补放",
+            "完成事件和重复事件处理"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何让流式接口断线后的客户端恢复可靠状态？",
+          "id": "stream_missing_engineering_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "为事件分配稳定序号并记录业务结果，不能仅把内存流当作权威状态。重连时先获取最新快照，或者按最后已确认的事件序号补放。，具体异常处理还没有设计。",
+          "id": "stream_missing_engineering_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_2"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "stream_resolved_after_followup",
+      "category": "resolved_after_followup",
+      "question": {
+        "stem": "如何让流式接口断线后的客户端恢复可靠状态？",
+        "rubric_points": {
+          "key_points": [
+            "事件标识与持久化",
+            "重连后快照或事件补放",
+            "完成事件和重复事件处理"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何让流式接口断线后的客户端恢复可靠状态？",
+          "id": "stream_resolved_after_followup_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "为事件分配稳定序号并记录业务结果，不能仅把内存流当作权威状态。重连时先获取最新快照，或者按最后已确认的事件序号补放。",
+          "id": "stream_resolved_after_followup_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        },
+        {
+          "role": "interviewer",
+          "content": "同一事件被补放两次时页面应该怎么处理？",
+          "id": "stream_resolved_after_followup_turn_2",
+          "kind": "followup",
+          "followup_level": 1
+        },
+        {
+          "role": "candidate",
+          "content": "以明确完成事件结束操作，并按事件标识去重，避免断线重试重复提交答案。",
+          "id": "stream_resolved_after_followup_turn_3",
+          "kind": "answer",
+          "followup_level": 1
+        }
+      ],
+      "followup_count": 1,
+      "expected": {
+        "followup": false,
+        "target": null
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "stream_multiple_gaps",
+      "category": "multiple_gaps",
+      "question": {
+        "stem": "如何让流式接口断线后的客户端恢复可靠状态？",
+        "rubric_points": {
+          "key_points": [
+            "事件标识与持久化",
+            "重连后快照或事件补放",
+            "完成事件和重复事件处理"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "如何让流式接口断线后的客户端恢复可靠状态？",
+          "id": "stream_multiple_gaps_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "为事件分配稳定序号并记录业务结果，不能仅把内存流当作权威状态。其余部分暂时没有考虑。",
+          "id": "stream_multiple_gaps_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "evaluation_complete",
+      "category": "complete",
+      "question": {
+        "stem": "怎样评估一次 Agent 提示词修改是否值得上线？",
+        "rubric_points": {
+          "key_points": [
+            "版本化测试集和对照基线",
+            "任务质量与性能成本指标",
+            "失败样本及发布回滚门槛"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "怎样评估一次 Agent 提示词修改是否值得上线？",
+          "id": "evaluation_complete_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "固定版本化代表性测试集，对旧提示词和新提示词做相同条件下的对照。比较任务成功率和事实正确性，同时记录延迟、token 消耗和工具调用成本。分析退化样本并设定发布门槛，灰度观测失败率，超阈值回滚旧版本。",
+          "id": "evaluation_complete_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": false,
+        "target": null
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "evaluation_partial",
+      "category": "partial",
+      "question": {
+        "stem": "怎样评估一次 Agent 提示词修改是否值得上线？",
+        "rubric_points": {
+          "key_points": [
+            "版本化测试集和对照基线",
+            "任务质量与性能成本指标",
+            "失败样本及发布回滚门槛"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "怎样评估一次 Agent 提示词修改是否值得上线？",
+          "id": "evaluation_partial_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "固定版本化代表性测试集，对旧提示词和新提示词做相同条件下的对照。比较任务成功率和事实正确性，同时记录延迟、token 消耗和工具调用成本。",
+          "id": "evaluation_partial_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_2"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "evaluation_short",
+      "category": "short",
+      "question": {
+        "stem": "怎样评估一次 Agent 提示词修改是否值得上线？",
+        "rubric_points": {
+          "key_points": [
+            "版本化测试集和对照基线",
+            "任务质量与性能成本指标",
+            "失败样本及发布回滚门槛"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "怎样评估一次 Agent 提示词修改是否值得上线？",
+          "id": "evaluation_short_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "版本化测试集和对照基线。",
+          "id": "evaluation_short_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "evaluation_off_topic",
+      "category": "off_topic",
+      "question": {
+        "stem": "怎样评估一次 Agent 提示词修改是否值得上线？",
+        "rubric_points": {
+          "key_points": [
+            "版本化测试集和对照基线",
+            "任务质量与性能成本指标",
+            "失败样本及发布回滚门槛"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "怎样评估一次 Agent 提示词修改是否值得上线？",
+          "id": "evaluation_off_topic_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "我昨天在看篮球比赛，这个问题和比赛结果有什么关系？",
+          "id": "evaluation_off_topic_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_0"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "evaluation_misconception",
+      "category": "misconception",
+      "question": {
+        "stem": "怎样评估一次 Agent 提示词修改是否值得上线？",
+        "rubric_points": {
+          "key_points": [
+            "版本化测试集和对照基线",
+            "任务质量与性能成本指标",
+            "失败样本及发布回滚门槛"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "怎样评估一次 Agent 提示词修改是否值得上线？",
+          "id": "evaluation_misconception_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "只要模型自己说新提示词效果更好，就足够证明可以上线。",
+          "id": "evaluation_misconception_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_0"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "evaluation_missing_engineering",
+      "category": "missing_engineering",
+      "question": {
+        "stem": "怎样评估一次 Agent 提示词修改是否值得上线？",
+        "rubric_points": {
+          "key_points": [
+            "版本化测试集和对照基线",
+            "任务质量与性能成本指标",
+            "失败样本及发布回滚门槛"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "怎样评估一次 Agent 提示词修改是否值得上线？",
+          "id": "evaluation_missing_engineering_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "固定版本化代表性测试集，对旧提示词和新提示词做相同条件下的对照。比较任务成功率和事实正确性，同时记录延迟、token 消耗和工具调用成本。，具体异常处理还没有设计。",
+          "id": "evaluation_missing_engineering_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_2"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "evaluation_resolved_after_followup",
+      "category": "resolved_after_followup",
+      "question": {
+        "stem": "怎样评估一次 Agent 提示词修改是否值得上线？",
+        "rubric_points": {
+          "key_points": [
+            "版本化测试集和对照基线",
+            "任务质量与性能成本指标",
+            "失败样本及发布回滚门槛"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "怎样评估一次 Agent 提示词修改是否值得上线？",
+          "id": "evaluation_resolved_after_followup_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "固定版本化代表性测试集，对旧提示词和新提示词做相同条件下的对照。比较任务成功率和事实正确性，同时记录延迟、token 消耗和工具调用成本。",
+          "id": "evaluation_resolved_after_followup_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        },
+        {
+          "role": "interviewer",
+          "content": "少数重要场景退化时如何决定是否发布？",
+          "id": "evaluation_resolved_after_followup_turn_2",
+          "kind": "followup",
+          "followup_level": 1
+        },
+        {
+          "role": "candidate",
+          "content": "分析退化样本并设定发布门槛，灰度观测失败率，超阈值回滚旧版本。",
+          "id": "evaluation_resolved_after_followup_turn_3",
+          "kind": "answer",
+          "followup_level": 1
+        }
+      ],
+      "followup_count": 1,
+      "expected": {
+        "followup": false,
+        "target": null
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    },
+    {
+      "id": "evaluation_multiple_gaps",
+      "category": "multiple_gaps",
+      "question": {
+        "stem": "怎样评估一次 Agent 提示词修改是否值得上线？",
+        "rubric_points": {
+          "key_points": [
+            "版本化测试集和对照基线",
+            "任务质量与性能成本指标",
+            "失败样本及发布回滚门槛"
+          ]
+        }
+      },
+      "turns": [
+        {
+          "role": "interviewer",
+          "content": "怎样评估一次 Agent 提示词修改是否值得上线？",
+          "id": "evaluation_multiple_gaps_turn_0",
+          "kind": "main",
+          "followup_level": 0
+        },
+        {
+          "role": "candidate",
+          "content": "固定版本化代表性测试集，对旧提示词和新提示词做相同条件下的对照。其余部分暂时没有考虑。",
+          "id": "evaluation_multiple_gaps_turn_1",
+          "kind": "answer",
+          "followup_level": 0
+        }
+      ],
+      "followup_count": 0,
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "label_origin": "assistant_authored_synthetic_unreviewed"
+    }
+  ]
+}

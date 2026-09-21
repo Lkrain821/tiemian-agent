@@ -8,6 +8,7 @@ from app.graph.dependencies import GraphDependencies
 from app.graph.v1.nodes.interview import InterviewNodes
 from app.graph.v1.routing import (
     route_assessment,
+    route_fallback_assessment,
     route_input,
     route_next_question,
     route_validation,
@@ -29,6 +30,7 @@ def build_interview_graph(dependencies: GraphDependencies, checkpointer: Any) ->
     graph.add_node("prepare_validation_prompt", nodes.prepare_validation_prompt)
     graph.add_node("persist_answer", nodes.persist_answer)
     graph.add_node("assess_answer", nodes.assess_answer)
+    graph.add_node("fallback_assessment", nodes.fallback_assessment)
     graph.add_node("compose_followup", nodes.compose_followup)
     graph.add_node("score_question", nodes.score_question)
     graph.add_node("persist_question_result", nodes.persist_question_result)
@@ -55,7 +57,11 @@ def build_interview_graph(dependencies: GraphDependencies, checkpointer: Any) ->
     graph.add_edge("persist_answer", "assess_answer")
     graph.add_conditional_edges(
         "assess_answer",
-        route_assessment,
+        lambda state: route_assessment(state, dependencies.settings),
+        {"followup": "compose_followup", "score": "score_question", "fallback": "fallback_assessment"},
+    )
+    graph.add_conditional_edges(
+        "fallback_assessment", route_fallback_assessment,
         {"followup": "compose_followup", "score": "score_question"},
     )
     graph.add_edge("compose_followup", "persist_prompt")
@@ -71,4 +77,3 @@ def build_interview_graph(dependencies: GraphDependencies, checkpointer: Any) ->
     graph.add_edge("persist_report", END)
 
     return graph.compile(checkpointer=checkpointer)
-

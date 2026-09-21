@@ -20,6 +20,7 @@ from app.core.errors import AppError
 from app.core.ids import new_id
 from app.core.logging import configure_logging
 from app.core.settings import Settings, get_settings
+from app.decision.client import DecisionClient, JevDecisionClient
 from app.graph.checkpoint import sqlite_checkpointer
 from app.graph.dependencies import GraphDependencies
 from app.graph.registry import GraphRegistry
@@ -33,7 +34,8 @@ from app.services.question_bank import QuestionBank
 logger = logging.getLogger(__name__)
 
 
-def create_app(*, settings: Settings | None = None, llm: Any | None = None) -> FastAPI:
+def create_app(*, settings: Settings | None = None, llm: Any | None = None,
+               decision: DecisionClient | None = None) -> FastAPI:
     resolved_settings = settings or get_settings()
 
     @asynccontextmanager
@@ -49,6 +51,11 @@ def create_app(*, settings: Settings | None = None, llm: Any | None = None) -> F
         question_bank = QuestionBank.load(resolved_settings.question_bank_path)
         owned_llm = llm is None
         llm_client = llm or DeepSeekClient(resolved_settings)
+        decision_client = decision
+        if decision_client is None and (
+            resolved_settings.decision_provider == "jev" or resolved_settings.jev_shadow_mode
+        ):
+            decision_client = JevDecisionClient(resolved_settings)
         async with sqlite_checkpointer(resolved_settings.checkpoint_db_path) as checkpointer:
             graph_registry = GraphRegistry()
             graph_registry.register(
@@ -59,6 +66,7 @@ def create_app(*, settings: Settings | None = None, llm: Any | None = None) -> F
                         repositories=repositories,
                         question_bank=question_bank,
                         llm=llm_client,
+                        decision=decision_client,
                     ),
                     checkpointer,
                 ),
@@ -82,10 +90,13 @@ def create_app(*, settings: Settings | None = None, llm: Any | None = None) -> F
                 graph_registry=graph_registry,
                 queries=queries,
                 commands=commands,
+                decision=decision_client,
             )
             try:
                 yield
             finally:
+                if decision is None and decision_client is not None:
+                    await decision_client.close()
                 if owned_llm and hasattr(llm_client, "close"):
                     await llm_client.close()
                 await database.close()

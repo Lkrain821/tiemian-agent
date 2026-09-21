@@ -44,6 +44,17 @@ class Settings(BaseSettings):
     deepseek_max_retries: int = Field(default=2, ge=0, le=5)
     deepseek_thinking_mode: Literal["enabled", "disabled"] = "disabled"
 
+    decision_provider: Literal["deepseek", "jev"] = "deepseek"
+    jev_api_key: SecretStr = SecretStr("")
+    jev_base_url: str = "https://api.typesafe.ai"
+    jev_model: str = "jev-latest"
+    jev_timeout_seconds: float = Field(default=3, gt=0, le=60)
+    jev_followup_threshold: float = Field(default=0.70, ge=0, le=1)
+    jev_score_threshold: float = Field(default=0.30, ge=0, le=1)
+    jev_min_confidence: float = Field(default=0.60, ge=0, le=1)
+    jev_fallback_enabled: bool = True
+    jev_shadow_mode: bool = False
+
     app_db_path: Path = REPOSITORY_ROOT / "data" / "tiemian.sqlite3"
     checkpoint_db_path: Path = REPOSITORY_ROOT / "data" / "checkpoints.sqlite3"
     question_bank_path: Path = REPOSITORY_ROOT / "data" / "questions.json"
@@ -57,6 +68,11 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def normalize(self) -> "Settings":
+        self.jev_base_url = self.jev_base_url.rstrip("/")
+        if not self.jev_base_url.startswith("https://") or not self.jev_model.strip():
+            raise ValueError("JEV_BASE_URL must use HTTPS and JEV_MODEL must not be empty")
+        if self.jev_score_threshold >= self.jev_followup_threshold:
+            raise ValueError("JEV_SCORE_THRESHOLD must be lower than JEV_FOLLOWUP_THRESHOLD")
         self.deepseek_base_url = self.deepseek_base_url.rstrip("/")
         if not self.deepseek_model.strip():
             raise ValueError("DEEPSEEK_MODEL must not be empty")

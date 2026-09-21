@@ -2,6 +2,10 @@
 
 from __future__ import annotations
 
+import asyncio
+import json
+import logging
+from time import perf_counter
 from typing import Any
 
 from langgraph.config import get_stream_writer
@@ -12,17 +16,20 @@ from app.core.ids import new_id
 from app.core.time import utc_now_iso
 from app.domain.interview import Difficulty, FocusCode, InterviewStatus
 from app.domain.rubric import DimensionCode
+from app.decision.assessment import resolve_rubric_point
+from app.decision.client import DeepSeekAssessmentClient, DecisionServiceError
+from app.decision.schemas import DecisionMetadata
 from app.graph.dependencies import GraphDependencies
+from app.graph.v1.routing import assessment_route, decision_route, log_assessment, route_fallback_assessment
 from app.graph.v1.state import InterviewState
 from app.llm.prompts import (
     PROMPT_VERSION,
-    assessment_messages,
     evaluation_messages,
     followup_messages,
     question_adaptation_messages,
     report_messages,
 )
-from app.llm.schemas import AnswerAssessment, QuestionEvaluation, ReportNarrative
+from app.llm.schemas import QuestionEvaluation, ReportNarrative
 from app.repositories.json_utils import dumps
 from app.services.reporting import build_report, report_context
 from app.services.scoring import validate_evaluation
@@ -376,26 +383,84 @@ class InterviewNodes:
         return {"current_turns": turns, "status": session["status"]}
 
     async def assess_answer(self, state: InterviewState) -> dict[str, Any]:
+        settings = self.deps.settings
+        if state["current_followup_count"] >= state.get("max_followups", 2):
+            return {"answer_assessment": None, "decision_metadata": {
+                "provider": "limit", "latency_ms": 0, "fallback_reason": None}}
+        if settings.jev_shadow_mode:
+            baseline, observed = await asyncio.gather(
+                self._deepseek_assessment(state), self._jev_assessment(state),
+            )
+            decision = observed["answer_assessment"]
+            if decision is None:
+                route, reason = "fallback", observed["decision_metadata"]["fallback_reason"]
+            else:
+                route, reason = decision_route(decision,
+                    followup_threshold=settings.jev_followup_threshold,
+                    score_threshold=settings.jev_score_threshold,
+                    min_confidence=settings.jev_min_confidence)
+            logging.getLogger(__name__).info("decision_shadow %s", json.dumps({
+                "session_id": state["session_id"], "question_id": state["current_question"]["id"],
+                "followup_count": state["current_followup_count"],
+                "deepseek_followup": baseline["answer_assessment"]["followup_needed"],
+                "jev_decision": decision, "jev_metadata": observed["decision_metadata"],
+                "jev_route": route, "fallback_reason": reason,
+            }, ensure_ascii=False))
+            return baseline
+        if settings.decision_provider == "deepseek":
+            return await self._deepseek_assessment(state)
+        return await self._jev_assessment(state)
+
+    async def _jev_assessment(self, state: InterviewState) -> dict[str, Any]:
+        started = perf_counter()
+        decision = None
+        reason = None
+        try:
+            if self.deps.decision is None:
+                raise DecisionServiceError("jev_not_configured")
+            decision = await self.deps.decision.assess_answer(
+                question=state["current_question"], turns=state["current_turns"],
+                followup_count=state["current_followup_count"],
+            )
+        except DecisionServiceError as exc:
+            reason = exc.reason
+        metadata = DecisionMetadata(provider="jev", latency_ms=(perf_counter() - started) * 1000,
+            fallback_reason=reason, confidence_source="min_relevance_target_choice")
+        return {"answer_assessment": decision.model_dump(mode="json") if decision else None,
+                "decision_metadata": metadata.model_dump(mode="json")}
+
+    async def fallback_assessment(self, state: InterviewState) -> dict[str, Any]:
+        _, reason = assessment_route(state, self.deps.settings)
+        result = await self._deepseek_assessment(state, fallback_reason=reason)
+        combined = {**state, **result}
+        log_assessment(combined, route_fallback_assessment(combined), reason)
+        return result
+
+    async def _deepseek_assessment(self, state: InterviewState,
+                                  fallback_reason: str | None = None) -> dict[str, Any]:
         question = state["current_question"]
         if question is None:
             raise RuntimeError("current question is required")
+        started = perf_counter()
         try:
-            assessment = await self.deps.llm.complete_json(
-                assessment_messages(
-                    question, state["current_turns"], state["current_followup_count"]
-                ),
-                AnswerAssessment,
-                max_tokens=900,
+            assessment = await DeepSeekAssessmentClient(self.deps.llm).assess_answer(
+                question=question, turns=state["current_turns"],
+                followup_count=state["current_followup_count"],
             )
         except LLMServiceError as exc:
             raise _stage_llm_error(exc, "ASSESSMENT_FAILED", "回答评估失败") from exc
-        return {"answer_assessment": assessment.model_dump(mode="json")}
+        metadata = DecisionMetadata(provider="deepseek_fallback" if fallback_reason else "deepseek",
+            latency_ms=(perf_counter() - started) * 1000, fallback_reason=fallback_reason)
+        return {"answer_assessment": assessment.model_dump(mode="json"),
+                "decision_metadata": metadata.model_dump(mode="json")}
 
     async def compose_followup(self, state: InterviewState) -> dict[str, Any]:
         question = state["current_question"]
         assessment = state["answer_assessment"]
         if question is None or assessment is None:
             raise RuntimeError("question and assessment are required")
+        focus = (resolve_rubric_point(question, assessment["followup_target"])
+                 if assessment.get("decision_source") == "jev" else assessment["followup_focus"])
         level = state["current_followup_count"] + 1
         message_id = new_id("turn")
         writer = get_stream_writer()
@@ -416,7 +481,7 @@ class InterviewNodes:
             followup_messages(
                 question,
                 state["current_turns"],
-                str(assessment["followup_focus"]),
+                focus,
             ),
             max_tokens=500,
         ):
@@ -557,6 +622,7 @@ class InterviewNodes:
             "pending_prompt": None,
             "pending_input": None,
             "answer_assessment": None,
+            "decision_metadata": None,
             "question_evaluation": None,
             "status": session["status"],
         }

@@ -21,4 +21,4 @@ class ApplicationContainer:
     graph_registry: Any
     queries: InterviewQueries
     commands: InterviewCommands
-
+    decision: Any = None

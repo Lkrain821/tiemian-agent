@@ -1,0 +1,1360 @@
+{
+  "dataset_version": "1",
+  "summary": {
+    "cases": 56,
+    "label_status": "synthetic_unreviewed_not_human_ground_truth",
+    "deepseek_completed": 56,
+    "jev_completed": 55,
+    "deepseek_label_agreement": 0.9821428571428571,
+    "jev_direct_coverage": 0.4107142857142857,
+    "jev_direct_label_agreement": 1,
+    "provider_direct_agreement": 0.9565217391304348,
+    "jev_target_label_agreement": 0.975609756097561,
+    "fallback_rate": 0.5892857142857143,
+    "mean_jev_latency_ms": 344.48768392862155,
+    "mean_deepseek_latency_ms": 2188.816699999344,
+    "mean_call_cost": null,
+    "cost_note": "Not measured: no billing usage/pricing supplied. Null is not zero.",
+    "target_comparison_note": "DeepSeek emits free text; cross-provider target agreement requires human review of rows."
+  },
+  "rows": [
+    {
+      "id": "checkpoint_complete",
+      "expected": {
+        "followup": false,
+        "target": null
+      },
+      "deepseek_latency_ms": 2980.2656000028946,
+      "deepseek": {
+        "answer_relevance": "relevant",
+        "followup_needed": false,
+        "followup_focus": null,
+        "rationale": "回答直接针对问题，覆盖了所有关键点：持久化 checkpoint（SQLite）、使用相同 thread_id 恢复 interrupt（Command(resume=答案)）、外部副作用幂等（业务幂等键）。内容具体且无实质缺口，无需追问。"
+      },
+      "jev": {
+        "answer_relevance": "relevant",
+        "followup_probability": 0.59,
+        "followup_confidence": 0.51,
+        "followup_target": "point_2",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 1091.8880000026547,
+      "jev_route": "fallback",
+      "fallback_reason": "low_confidence"
+    },
+    {
+      "id": "checkpoint_partial",
+      "expected": {
+        "followup": true,
+        "target": "point_2"
+      },
+      "deepseek_latency_ms": 2377.067300003546,
+      "deepseek": {
+        "answer_relevance": "relevant",
+        "followup_needed": true,
+        "followup_focus": "外部副作用幂等：恢复时如何避免重复发送通知或重复记录答案？",
+        "rationale": "回答直接切题，覆盖了持久化 checkpoint 和使用相同 thread_id 恢复 interrupt 两个要点，但未提及外部副作用幂等。该缺口对评价有实质影响，且可通过追问澄清。"
+      },
+      "jev": {
+        "answer_relevance": "relevant",
+        "followup_probability": 0.72,
+        "followup_confidence": 0.93,
+        "followup_target": "point_2",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 290.028399998846,
+      "jev_route": "followup",
+      "fallback_reason": null
+    },
+    {
+      "id": "checkpoint_short",
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "deepseek_latency_ms": 1927.2805000000517,
+      "deepseek": {
+        "answer_relevance": "partially_relevant",
+        "followup_needed": true,
+        "followup_focus": "请补充如何使用相同 thread_id 恢复 interrupt，以及如何处理外部副作用幂等。",
+        "rationale": "回答仅提到持久化 checkpoint，未说明如何使用相同 thread_id 恢复 interrupt，也未涉及外部副作用幂等，缺少关键细节。"
+      },
+      "jev": {
+        "answer_relevance": "partially_relevant",
+        "followup_probability": 0.85,
+        "followup_confidence": 0.55,
+        "followup_target": "point_1",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 305.06420000165235,
+      "jev_route": "fallback",
+      "fallback_reason": "low_confidence"
+    },
+    {
+      "id": "checkpoint_off_topic",
+      "expected": {
+        "followup": true,
+        "target": "point_0"
+      },
+      "deepseek_latency_ms": 2136.372900000424,
+      "deepseek": {
+        "answer_relevance": "off_topic",
+        "followup_needed": true,
+        "followup_focus": "请直接回答：LangGraph 服务中途重启后，如何通过持久化 checkpoint 和相同 thread_id 恢复等待中的面试？",
+        "rationale": "回答完全偏离问题，讨论篮球比赛，未涉及任何技术要点。需要追问以引导候选人回到正题。"
+      },
+      "jev": {
+        "answer_relevance": "off_topic",
+        "followup_probability": 0.79,
+        "followup_confidence": 0.63,
+        "followup_target": "point_0",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 286.6370000047027,
+      "jev_route": "followup",
+      "fallback_reason": null
+    },
+    {
+      "id": "checkpoint_misconception",
+      "expected": {
+        "followup": true,
+        "target": "point_0"
+      },
+      "deepseek_latency_ms": 3011.473999998998,
+      "deepseek": {
+        "answer_relevance": "off_topic",
+        "followup_needed": true,
+        "followup_focus": "内存 MemorySaver 在进程重启后数据会丢失，无法恢复。请说明应使用持久化 checkpoint（如 SqliteSaver/PostgresSaver）并配合相同 thread_id 来恢复 interrupt。",
+        "rationale": "回答声称仅用内存 MemorySaver 即可在操作系统重启后恢复，这与 LangGraph 的持久化机制相悖：内存存储不跨进程存活。该回答未涉及评分要点中的持久化 checkpoint、thread_id 恢复或副作用幂等，属于错误且不切题。需要追问以澄清持久化方案。"
+      },
+      "jev": {
+        "answer_relevance": "partially_relevant",
+        "followup_probability": 0.87,
+        "followup_confidence": 0.74,
+        "followup_target": "point_0",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 304.74490000051446,
+      "jev_route": "followup",
+      "fallback_reason": null
+    },
+    {
+      "id": "checkpoint_missing_engineering",
+      "expected": {
+        "followup": true,
+        "target": "point_2"
+      },
+      "deepseek_latency_ms": 2241.79390000063,
+      "deepseek": {
+        "answer_relevance": "partially_relevant",
+        "followup_needed": true,
+        "followup_focus": "外部副作用幂等：恢复时如何避免重复发送消息或重复执行已完成的动作？",
+        "rationale": "回答提到了持久化 checkpoint 和使用相同 thread_id 恢复 interrupt，覆盖了两个关键点，但未涉及外部副作用幂等。该缺口对恢复正确性有实质影响，且可通过追问澄清。"
+      },
+      "jev": {
+        "answer_relevance": "relevant",
+        "followup_probability": 0.81,
+        "followup_confidence": 0.91,
+        "followup_target": "point_2",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 314.13050000264775,
+      "jev_route": "followup",
+      "fallback_reason": null
+    },
+    {
+      "id": "checkpoint_resolved_after_followup",
+      "expected": {
+        "followup": false,
+        "target": null
+      },
+      "deepseek_latency_ms": 2587.395099995774,
+      "deepseek": {
+        "answer_relevance": "relevant",
+        "followup_needed": false,
+        "followup_focus": null,
+        "rationale": "候选人的回答直接针对主问题，明确提到使用持久化 SQLite 存储状态快照、通过相同 thread_id 加载检查点并用 Command(resume=答案) 恢复等待节点，覆盖了评分要点中的持久化 checkpoint 和恢复 interrupt。在追问中，候选人进一步说明使用业务幂等键避免重放节点时重复执行副作用，覆盖了外部副作用幂等。回答完整且切题，无需进一步追问。"
+      },
+      "jev": {
+        "answer_relevance": "relevant",
+        "followup_probability": 0.64,
+        "followup_confidence": 0.52,
+        "followup_target": "point_2",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 299.8799000051804,
+      "jev_route": "fallback",
+      "fallback_reason": "low_confidence"
+    },
+    {
+      "id": "checkpoint_multiple_gaps",
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "deepseek_latency_ms": 1617.0203999936348,
+      "deepseek": {
+        "answer_relevance": "partially_relevant",
+        "followup_needed": true,
+        "followup_focus": "如何用相同 thread_id 恢复 interrupt 并保证外部副作用幂等？",
+        "rationale": "回答提到了持久化 checkpoint（SQLite），但未说明如何用相同 thread_id 恢复 interrupt，也未涉及外部副作用幂等，这两个评分要点缺失，且可通过追问澄清。"
+      },
+      "jev": {
+        "answer_relevance": "partially_relevant",
+        "followup_probability": 0.88,
+        "followup_confidence": 0.84,
+        "followup_target": "point_1",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 341.93129999766825,
+      "jev_route": "followup",
+      "fallback_reason": null
+    },
+    {
+      "id": "rag_complete",
+      "expected": {
+        "followup": false,
+        "target": null
+      },
+      "deepseek_latency_ms": 1889.1950999968685,
+      "deepseek": {
+        "answer_relevance": "relevant",
+        "followup_needed": false,
+        "followup_focus": null,
+        "rationale": "回答覆盖了切分向量化索引和召回、证据组装与生成职责、空召回及事实核验三个关键点，内容切题且完整，无需追问。"
+      },
+      "jev": {
+        "answer_relevance": "relevant",
+        "followup_probability": 0.67,
+        "followup_confidence": 0.32,
+        "followup_target": "point_2",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 327.59010000154376,
+      "jev_route": "fallback",
+      "fallback_reason": "low_confidence"
+    },
+    {
+      "id": "rag_partial",
+      "expected": {
+        "followup": true,
+        "target": "point_2"
+      },
+      "deepseek_latency_ms": 2203.690000002098,
+      "deepseek": {
+        "answer_relevance": "partially_relevant",
+        "followup_needed": true,
+        "followup_focus": "请说明在召回为空或证据不足时，链路如何避免生成无依据内容，以及如何对生成答案进行事实核验。",
+        "rationale": "回答覆盖了切分向量化索引和召回、证据组装与生成职责，但未涉及空召回处理及事实核验，这两个是评分要点中的关键部分，缺失会影响对完整链路的评价。"
+      },
+      "jev": {
+        "answer_relevance": "relevant",
+        "followup_probability": 0.81,
+        "followup_confidence": 0.41,
+        "followup_target": "point_2",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 322.7681999997003,
+      "jev_route": "fallback",
+      "fallback_reason": "low_confidence"
+    },
+    {
+      "id": "rag_short",
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "deepseek_latency_ms": 2167.478299998038,
+      "deepseek": {
+        "answer_relevance": "partially_relevant",
+        "followup_needed": true,
+        "followup_focus": "请补充说明在召回后如何组装证据并生成回答，以及如何处理空召回和进行事实核验。",
+        "rationale": "回答仅提及了切分向量化索引和召回，未涉及证据组装与生成职责、空召回及事实核验等关键点，因此部分相关。需要追问以确认候选人对完整链路的理解。"
+      },
+      "jev": {
+        "answer_relevance": "partially_relevant",
+        "followup_probability": 0.88,
+        "followup_confidence": 0.69,
+        "followup_target": "point_1",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 324.6625000028871,
+      "jev_route": "followup",
+      "fallback_reason": null
+    },
+    {
+      "id": "rag_off_topic",
+      "expected": {
+        "followup": true,
+        "target": "point_0"
+      },
+      "deepseek_latency_ms": 2682.016599996132,
+      "deepseek": {
+        "answer_relevance": "off_topic",
+        "followup_needed": true,
+        "followup_focus": "请针对问题回答：如何构建可验证的基础RAG回答链路？例如，如何设计切分、向量化、索引和召回，以及如何组装证据并处理空召回和事实核验。",
+        "rationale": "回答完全未涉及RAG链路构建，而是谈论篮球比赛，与问题无关。需要追问以引导候选人回到技术主题。"
+      },
+      "jev": {
+        "answer_relevance": "off_topic",
+        "followup_probability": 0.73,
+        "followup_confidence": 0.72,
+        "followup_target": "point_0",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 310.9420000037062,
+      "jev_route": "followup",
+      "fallback_reason": null
+    },
+    {
+      "id": "rag_misconception",
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "deepseek_latency_ms": 2779.817099995853,
+      "deepseek": {
+        "answer_relevance": "off_topic",
+        "followup_needed": true,
+        "followup_focus": "请说明在基础 RAG 链路中，如何对召回结果进行事实核验，以及当向量库返回的文档与问题不相关或为空时，系统应如何处理？",
+        "rationale": "回答仅断言向量库返回相关文档即可保证生成正确，未涉及构建可验证 RAG 链路的任何关键步骤（切分向量化索引和召回、证据组装与生成职责、空召回及事实核验），且该断言本身是错误的。需要追问以澄清候选人对事实核验和空召回处理的理解。"
+      },
+      "jev": {
+        "answer_relevance": "partially_relevant",
+        "followup_probability": 0.89,
+        "followup_confidence": 0.52,
+        "followup_target": "point_2",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 344.4900000031339,
+      "jev_route": "fallback",
+      "fallback_reason": "low_confidence"
+    },
+    {
+      "id": "rag_missing_engineering",
+      "expected": {
+        "followup": true,
+        "target": "point_2"
+      },
+      "deepseek_latency_ms": 2220.349700000952,
+      "deepseek": {
+        "answer_relevance": "partially_relevant",
+        "followup_needed": true,
+        "followup_focus": "请说明当召回为空或证据不足时如何处理，以及如何对生成答案进行事实核验以保证可验证性。",
+        "rationale": "回答覆盖了切分向量化索引和召回、证据组装与生成职责，但未涉及空召回及事实核验，且明确表示异常处理未设计。需要追问空召回和事实核验的具体方案。"
+      },
+      "jev": {
+        "answer_relevance": "relevant",
+        "followup_probability": 0.85,
+        "followup_confidence": 0.28,
+        "followup_target": "point_2",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 361.31140000361484,
+      "jev_route": "fallback",
+      "fallback_reason": "low_confidence"
+    },
+    {
+      "id": "rag_resolved_after_followup",
+      "expected": {
+        "followup": false,
+        "target": null
+      },
+      "deepseek_latency_ms": 2262.947899995197,
+      "deepseek": {
+        "answer_relevance": "relevant",
+        "followup_needed": false,
+        "followup_focus": null,
+        "rationale": "候选人的回答覆盖了评分要点：首轮描述了切分、向量化、索引和召回，并提到证据组装与生成职责；追问后补充了空召回处理（拒答或澄清）和事实核验（检查答案与引用片段一致性）。回答切题且无实质缺口。"
+      },
+      "jev": {
+        "answer_relevance": "relevant",
+        "followup_probability": 0.73,
+        "followup_confidence": 0.47,
+        "followup_target": "point_2",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 297.66599999857135,
+      "jev_route": "fallback",
+      "fallback_reason": "low_confidence"
+    },
+    {
+      "id": "rag_multiple_gaps",
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "deepseek_latency_ms": 1992.125800003123,
+      "deepseek": {
+        "answer_relevance": "partially_relevant",
+        "followup_needed": true,
+        "followup_focus": "请补充召回后如何组装证据并生成回答，以及如何处理空召回和进行事实核验。",
+        "rationale": "回答仅覆盖了切分、向量化、索引和召回，未涉及证据组装与生成职责、空召回处理及事实核验等关键环节，存在明显缺口。"
+      },
+      "jev": {
+        "answer_relevance": "partially_relevant",
+        "followup_probability": 0.88,
+        "followup_confidence": 0.62,
+        "followup_target": "point_1",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 310.99149999499787,
+      "jev_route": "followup",
+      "fallback_reason": null
+    },
+    {
+      "id": "idempotency_complete",
+      "expected": {
+        "followup": false,
+        "target": null
+      },
+      "deepseek_latency_ms": 1996.452200000931,
+      "deepseek": {
+        "answer_relevance": "relevant",
+        "followup_needed": false,
+        "followup_focus": null,
+        "rationale": "回答覆盖了所有评分要点：使用幂等键标识同一操作、通过唯一约束和结果持久化防止重复创建、处理并发及不同请求体冲突。内容完整且切题，无需追问。"
+      },
+      "jev": {
+        "answer_relevance": "relevant",
+        "followup_probability": 0.59,
+        "followup_confidence": 0.52,
+        "followup_target": "point_2",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 329.78739999816753,
+      "jev_route": "fallback",
+      "fallback_reason": "low_confidence"
+    },
+    {
+      "id": "idempotency_partial",
+      "expected": {
+        "followup": true,
+        "target": "point_2"
+      },
+      "deepseek_latency_ms": 1709.4094999993104,
+      "deepseek": {
+        "answer_relevance": "relevant",
+        "followup_needed": true,
+        "followup_focus": "当并发请求携带相同幂等键但请求体不同时，如何保证返回一致结果并避免数据冲突？",
+        "rationale": "回答覆盖了幂等键和唯一约束持久化两个要点，但未提及并发及不同请求体冲突的处理，这是评分要点之一，且可通过追问澄清。"
+      },
+      "jev": {
+        "answer_relevance": "relevant",
+        "followup_probability": 0.74,
+        "followup_confidence": 0.95,
+        "followup_target": "point_2",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 304.41099999734433,
+      "jev_route": "followup",
+      "fallback_reason": null
+    },
+    {
+      "id": "idempotency_short",
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "deepseek_latency_ms": 1515.4827000005753,
+      "deepseek": {
+        "answer_relevance": "partially_relevant",
+        "followup_needed": true,
+        "followup_focus": "请说明如何通过唯一约束和结果持久化来保证幂等键在并发和不同请求体冲突下的有效性。",
+        "rationale": "回答仅提及业务幂等键标识同一操作，未涉及唯一约束、结果持久化以及并发和不同请求体冲突的处理，缺少关键实现细节。"
+      },
+      "jev": {
+        "answer_relevance": "relevant",
+        "followup_probability": 0.86,
+        "followup_confidence": 0.27,
+        "followup_target": "point_1",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 307.84549999953015,
+      "jev_route": "fallback",
+      "fallback_reason": "low_confidence"
+    },
+    {
+      "id": "idempotency_off_topic",
+      "expected": {
+        "followup": true,
+        "target": "point_0"
+      },
+      "deepseek_latency_ms": 2163.4344999984023,
+      "deepseek": {
+        "answer_relevance": "off_topic",
+        "followup_needed": true,
+        "followup_focus": "请针对问题本身回答：如何通过业务幂等键、唯一约束和结果持久化来防止接口超时重试导致订单被重复创建？",
+        "rationale": "回答完全偏离问题，讨论篮球比赛，未涉及任何技术要点。需要追问以引导候选人回到正题。"
+      },
+      "jev": {
+        "answer_relevance": "off_topic",
+        "followup_probability": 0.84,
+        "followup_confidence": 0.8,
+        "followup_target": "point_0",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 305.2123000015854,
+      "jev_route": "followup",
+      "fallback_reason": null
+    },
+    {
+      "id": "idempotency_misconception",
+      "expected": {
+        "followup": true,
+        "target": "point_0"
+      },
+      "deepseek_latency_ms": 2869.6372999984305,
+      "deepseek": {
+        "answer_relevance": "off_topic",
+        "followup_needed": true,
+        "followup_focus": "请解释幂等键在重试场景下应如何生成和使用，才能确保同一笔订单的多次请求被识别为同一操作？",
+        "rationale": "回答提出每次重试生成新随机幂等键，这与幂等键应标识同一业务操作的核心要求相悖，无法防止重复创建订单，且未涉及唯一约束、结果持久化或并发冲突处理。回答未切中评分要点，存在根本性误解，需要追问澄清其对幂等键作用的理解。"
+      },
+      "jev": {
+        "answer_relevance": "partially_relevant",
+        "followup_probability": 0.9,
+        "followup_confidence": 0.53,
+        "followup_target": "point_0",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 326.16889999917476,
+      "jev_route": "fallback",
+      "fallback_reason": "low_confidence"
+    },
+    {
+      "id": "idempotency_missing_engineering",
+      "expected": {
+        "followup": true,
+        "target": "point_2"
+      },
+      "deepseek_latency_ms": 2317.312499995751,
+      "deepseek": {
+        "answer_relevance": "relevant",
+        "followup_needed": true,
+        "followup_focus": "请具体说明如何处理并发请求携带不同请求体但使用相同幂等键的情况，例如如何检测冲突并返回一致结果。",
+        "rationale": "回答覆盖了幂等键复用和唯一约束持久化，但未涉及并发及不同请求体冲突这一关键点。该缺口对评价有实质影响，且可通过追问澄清。"
+      },
+      "jev": {
+        "answer_relevance": "relevant",
+        "followup_probability": 0.83,
+        "followup_confidence": 0.84,
+        "followup_target": "point_2",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 340.0753999958397,
+      "jev_route": "followup",
+      "fallback_reason": null
+    },
+    {
+      "id": "idempotency_resolved_after_followup",
+      "expected": {
+        "followup": false,
+        "target": null
+      },
+      "deepseek_latency_ms": 1984.3495999957668,
+      "deepseek": {
+        "answer_relevance": "relevant",
+        "followup_needed": false,
+        "followup_focus": null,
+        "rationale": "回答直接回应了追问，说明了并发同键请求的处理：只允许一个执行者，同键不同请求体返回冲突，未完成请求有明确恢复状态。这覆盖了评分要点中的并发及不同请求体冲突，且与之前的回答一致，没有需要进一步澄清的实质缺口。"
+      },
+      "jev": {
+        "answer_relevance": "relevant",
+        "followup_probability": 0.68,
+        "followup_confidence": 0.61,
+        "followup_target": "point_2",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 353.152499999851,
+      "jev_route": "fallback",
+      "fallback_reason": "probability_gray_zone"
+    },
+    {
+      "id": "idempotency_multiple_gaps",
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "deepseek_latency_ms": 2171.8982999955188,
+      "deepseek": {
+        "answer_relevance": "partially_relevant",
+        "followup_needed": true,
+        "followup_focus": "服务端如何利用幂等键防止重复创建订单？例如唯一约束、结果持久化或并发冲突处理。",
+        "rationale": "回答仅提及客户端复用幂等键，未涉及服务端如何利用该键防止重复创建，也未覆盖唯一约束、结果持久化或并发冲突等关键点。存在可通过追问澄清的实质缺口。"
+      },
+      "jev": {
+        "answer_relevance": "partially_relevant",
+        "followup_probability": 0.89,
+        "followup_confidence": 0.51,
+        "followup_target": "point_1",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 334.54129999881843,
+      "jev_route": "fallback",
+      "fallback_reason": "low_confidence"
+    },
+    {
+      "id": "tools_complete",
+      "expected": {
+        "followup": false,
+        "target": null
+      },
+      "deepseek_latency_ms": 1568.854699995427,
+      "deepseek": {
+        "answer_relevance": "relevant",
+        "followup_needed": false,
+        "followup_focus": null,
+        "rationale": "回答覆盖了评分要点中的工具参数 schema 校验、身份授权和最小权限、超时重试与幂等，内容切题且完整，无需追问。"
+      },
+      "jev": {
+        "answer_relevance": "relevant",
+        "followup_probability": 0.56,
+        "followup_confidence": 0.16,
+        "followup_target": "point_1",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 347.5092000007862,
+      "jev_route": "fallback",
+      "fallback_reason": "low_confidence"
+    },
+    {
+      "id": "tools_partial",
+      "expected": {
+        "followup": true,
+        "target": "point_2"
+      },
+      "deepseek_latency_ms": 2707.080699998187,
+      "deepseek": {
+        "answer_relevance": "partially_relevant",
+        "followup_needed": true,
+        "followup_focus": "请补充超时重试与幂等机制，例如如何设置超时、重试策略以及确保操作幂等以避免重复副作用。",
+        "rationale": "回答覆盖了工具参数 schema 校验和身份授权与最小权限两个要点，但未提及超时重试与幂等，这是评分要点之一，且对安全调用有副作用的外部工具至关重要。"
+      },
+      "jev": {
+        "answer_relevance": "relevant",
+        "followup_probability": 0.82,
+        "followup_confidence": 0.49,
+        "followup_target": "point_2",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 383.1084999983432,
+      "jev_route": "fallback",
+      "fallback_reason": "low_confidence"
+    },
+    {
+      "id": "tools_short",
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "deepseek_latency_ms": 1723.8770999974804,
+      "deepseek": {
+        "answer_relevance": "partially_relevant",
+        "followup_needed": true,
+        "followup_focus": "请补充身份授权和最小权限、超时重试与幂等这两个方面的具体措施。",
+        "rationale": "回答仅提及工具参数 schema 校验，覆盖了评分要点之一，但未涉及身份授权和最小权限、超时重试与幂等，存在明显缺口，需要追问以获取完整答案。"
+      },
+      "jev": {
+        "answer_relevance": "partially_relevant",
+        "followup_probability": 0.88,
+        "followup_confidence": 0.71,
+        "followup_target": "point_1",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 440.9520999979577,
+      "jev_route": "followup",
+      "fallback_reason": null
+    },
+    {
+      "id": "tools_off_topic",
+      "expected": {
+        "followup": true,
+        "target": "point_0"
+      },
+      "deepseek_latency_ms": 1846.7079000038211,
+      "deepseek": {
+        "answer_relevance": "off_topic",
+        "followup_needed": true,
+        "followup_focus": "请针对问题回答：如何安全地让 Agent 调用一个有副作用的外部工具？可以从工具参数 schema 校验、身份授权和最小权限、超时重试与幂等三个方面展开。",
+        "rationale": "回答完全偏离问题，谈论篮球比赛，未涉及任何安全调用外部工具的内容。需要追问引导候选人回到主题。"
+      },
+      "jev": {
+        "answer_relevance": "off_topic",
+        "followup_probability": 0.79,
+        "followup_confidence": 0.54,
+        "followup_target": "point_0",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 318.6104999986128,
+      "jev_route": "fallback",
+      "fallback_reason": "low_confidence"
+    },
+    {
+      "id": "tools_misconception",
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "deepseek_latency_ms": 2588.029099999403,
+      "deepseek": {
+        "answer_relevance": "off_topic",
+        "followup_needed": true,
+        "followup_focus": "请说明如何通过身份授权和最小权限原则来限制 Agent 调用有副作用工具的范围，而不是仅依赖模型生成的 JSON 合法性。",
+        "rationale": "回答声称模型生成合法 JSON 即代表用户已授权所有工具操作，这与安全调用有副作用工具的核心要求相悖。该回答未涉及工具参数 schema 校验、身份授权和最小权限、超时重试与幂等等任何评分要点，且存在明显误解，需要追问澄清其授权机制的理解。"
+      },
+      "jev": {
+        "answer_relevance": "partially_relevant",
+        "followup_probability": 0.86,
+        "followup_confidence": 0.76,
+        "followup_target": "point_1",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 371.90669999836246,
+      "jev_route": "followup",
+      "fallback_reason": null
+    },
+    {
+      "id": "tools_missing_engineering",
+      "expected": {
+        "followup": true,
+        "target": "point_2"
+      },
+      "deepseek_latency_ms": 2113.119399997231,
+      "deepseek": {
+        "answer_relevance": "partially_relevant",
+        "followup_needed": true,
+        "followup_focus": "请补充超时重试与幂等机制的设计，例如如何设置超时、重试策略以及如何保证操作幂等。",
+        "rationale": "回答覆盖了工具参数 schema 校验和身份授权与最小权限两个要点，但未涉及超时重试与幂等，且明确表示异常处理尚未设计，存在实质性缺口。"
+      },
+      "jev": {
+        "answer_relevance": "relevant",
+        "followup_probability": 0.86,
+        "followup_confidence": 0.43,
+        "followup_target": "point_2",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 357.7326000013272,
+      "jev_route": "fallback",
+      "fallback_reason": "low_confidence"
+    },
+    {
+      "id": "tools_resolved_after_followup",
+      "expected": {
+        "followup": false,
+        "target": null
+      },
+      "deepseek_latency_ms": 2400.7493000026443,
+      "deepseek": {
+        "answer_relevance": "relevant",
+        "followup_needed": false,
+        "followup_focus": null,
+        "rationale": "回答直接回应了追问，指出需要设置超时、区分可重试错误，并使用幂等键避免重复执行，覆盖了评分要点中的超时重试与幂等。结合之前的回答，已涉及参数 schema 校验和身份授权与最小权限，整体切题且无实质缺口。"
+      },
+      "jev": {
+        "answer_relevance": "relevant",
+        "followup_probability": 0.64,
+        "followup_confidence": 0.16,
+        "followup_target": "point_2",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 344.91240000352263,
+      "jev_route": "fallback",
+      "fallback_reason": "low_confidence"
+    },
+    {
+      "id": "tools_multiple_gaps",
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "deepseek_latency_ms": 1799.3293999970774,
+      "deepseek": {
+        "answer_relevance": "partially_relevant",
+        "followup_needed": true,
+        "followup_focus": "身份授权和最小权限",
+        "rationale": "回答仅涉及工具参数 schema 校验，未提及身份授权和最小权限、超时重试与幂等两个关键点。存在可通过追问澄清的缺口，优先追问身份授权和最小权限。"
+      },
+      "jev": {
+        "answer_relevance": "partially_relevant",
+        "followup_probability": 0.89,
+        "followup_confidence": 0.8,
+        "followup_target": "point_1",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 358.57150000083493,
+      "jev_route": "followup",
+      "fallback_reason": null
+    },
+    {
+      "id": "retrieval_complete",
+      "expected": {
+        "followup": false,
+        "target": null
+      },
+      "deepseek_latency_ms": 2281.565600002068,
+      "deepseek": {
+        "answer_relevance": "relevant",
+        "followup_needed": false,
+        "followup_focus": null,
+        "rationale": "回答覆盖了评分要点：分层排查数据索引与召回（核对入库、切分、索引版本、查询改写和过滤）、标注查询和Recall@K（用带标签查询集计算并查看失败样本）、变更对照及回滚（对比变更前后配置、对照实验、回滚）。内容切题且完整，无需追问。"
+      },
+      "jev": {
+        "answer_relevance": "relevant",
+        "followup_probability": 0.61,
+        "followup_confidence": 0.36,
+        "followup_target": "point_1",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 306.8686999977217,
+      "jev_route": "fallback",
+      "fallback_reason": "low_confidence"
+    },
+    {
+      "id": "retrieval_partial",
+      "expected": {
+        "followup": true,
+        "target": "point_2"
+      },
+      "deepseek_latency_ms": 2520.334200002253,
+      "deepseek": {
+        "answer_relevance": "partially_relevant",
+        "followup_needed": true,
+        "followup_focus": "请补充如何通过变更对照（如索引、切分、查询改写等变更）来定位问题，以及如何回滚验证。",
+        "rationale": "回答提到了核对文档入库、切分、索引版本、查询改写和召回过滤，以及用带标签查询集计算 Recall@K 并查看失败样本，覆盖了分层排查和标注查询的部分要点，但未提及变更对照及回滚这一关键排查手段。"
+      },
+      "jev": {
+        "answer_relevance": "relevant",
+        "followup_probability": 0.73,
+        "followup_confidence": 0.92,
+        "followup_target": "point_2",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 407.93509999639355,
+      "jev_route": "followup",
+      "fallback_reason": null
+    },
+    {
+      "id": "retrieval_short",
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "deepseek_latency_ms": 2677.691799995955,
+      "deepseek": {
+        "answer_relevance": "partially_relevant",
+        "followup_needed": true,
+        "followup_focus": "请具体说明如何分层排查数据索引与召回，包括检查哪些环节、如何标注查询并计算Recall@K，以及如何通过变更对照和回滚定位问题。",
+        "rationale": "回答仅提及“分层排查数据索引与召回”，与评分要点中的第一点部分相关，但未展开具体排查步骤，也未涉及标注查询和Recall@K、变更对照及回滚等要点。回答过于简略，缺乏实质性内容，需要追问以获取具体排查方法。"
+      },
+      "jev": {
+        "answer_relevance": "partially_relevant",
+        "followup_probability": 0.87,
+        "followup_confidence": 0.29,
+        "followup_target": "point_1",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 357.30429999966873,
+      "jev_route": "fallback",
+      "fallback_reason": "low_confidence"
+    },
+    {
+      "id": "retrieval_off_topic",
+      "expected": {
+        "followup": true,
+        "target": "point_0"
+      },
+      "deepseek_latency_ms": 1501.140199994552,
+      "deepseek": {
+        "answer_relevance": "off_topic",
+        "followup_needed": true,
+        "followup_focus": "请回到问题：相关文档没有进入 RAG 的 Top-K，你如何排查？",
+        "rationale": "回答完全偏离问题，讨论篮球比赛，未涉及任何排查方法。需要追问以引导回答切题。"
+      },
+      "jev": {
+        "answer_relevance": "off_topic",
+        "followup_probability": 0.81,
+        "followup_confidence": 0.65,
+        "followup_target": "point_0",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 317.4270000017714,
+      "jev_route": "followup",
+      "fallback_reason": null
+    },
+    {
+      "id": "retrieval_misconception",
+      "expected": {
+        "followup": true,
+        "target": "point_0"
+      },
+      "deepseek_latency_ms": 3031.2953000029665,
+      "deepseek": {
+        "answer_relevance": "off_topic",
+        "followup_needed": true,
+        "followup_focus": "请说明检索与生成阶段的区别，并给出排查相关文档未进入 Top-K 的具体步骤。",
+        "rationale": "回答声称只需修改生成 prompt 就能保证检索召回，这混淆了生成与检索阶段，未涉及任何排查步骤，也未触及评分要点中的分层排查、Recall@K 标注或变更对照。回答完全偏离问题，且存在一个可通过追问澄清的关键缺口：候选人是否理解检索与生成是独立阶段，以及如何定位召回失败。"
+      },
+      "jev": {
+        "answer_relevance": "partially_relevant",
+        "followup_probability": 0.85,
+        "followup_confidence": 0.44,
+        "followup_target": "point_0",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 294.0029000019422,
+      "jev_route": "fallback",
+      "fallback_reason": "low_confidence"
+    },
+    {
+      "id": "retrieval_missing_engineering",
+      "expected": {
+        "followup": true,
+        "target": "point_2"
+      },
+      "deepseek_latency_ms": 2754.056599995238,
+      "deepseek": {
+        "answer_relevance": "partially_relevant",
+        "followup_needed": true,
+        "followup_focus": "请具体说明如何通过分层排查定位问题，例如如何检查索引构建、查询改写和召回过滤，以及如何利用失败样本分析改进召回。",
+        "rationale": "回答提到了核对文档入库、切分、索引版本、查询改写和召回过滤，以及计算Recall@K和查看失败样本，覆盖了部分评分要点，但缺乏分层排查的具体方法和变更对照及回滚的内容，且未深入说明如何利用失败样本进行改进。"
+      },
+      "jev": {
+        "answer_relevance": "relevant",
+        "followup_probability": 0.8,
+        "followup_confidence": 0.86,
+        "followup_target": "point_2",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 331.1119999998482,
+      "jev_route": "followup",
+      "fallback_reason": null
+    },
+    {
+      "id": "retrieval_resolved_after_followup",
+      "expected": {
+        "followup": false,
+        "target": null
+      },
+      "deepseek_latency_ms": 2596.287000000302,
+      "deepseek": {
+        "answer_relevance": "relevant",
+        "followup_needed": false,
+        "followup_focus": null,
+        "rationale": "候选人的回答直接回应了追问，说明通过对比变更前后的索引和召回配置、进行对照实验来证明修改改善了召回，并提到退化时回滚已验证版本。这覆盖了评分要点中的“变更对照及回滚”，且与主问题排查流程一致。回答切题，无实质缺口。"
+      },
+      "jev": {
+        "answer_relevance": "relevant",
+        "followup_probability": 0.65,
+        "followup_confidence": 0.32,
+        "followup_target": "point_1",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 304.62270000134595,
+      "jev_route": "fallback",
+      "fallback_reason": "low_confidence"
+    },
+    {
+      "id": "retrieval_multiple_gaps",
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "deepseek_latency_ms": 2513.9673999947263,
+      "deepseek": {
+        "answer_relevance": "partially_relevant",
+        "followup_needed": true,
+        "followup_focus": "请补充如何通过标注查询和计算 Recall@K 来量化评估召回效果，以及如何通过变更对照和回滚来定位问题。",
+        "rationale": "回答提到了核对文档入库、切分、索引版本和查询改写、召回过滤，属于分层排查数据索引与召回的一部分，但未涉及标注查询和 Recall@K 的量化评估，也未提及变更对照及回滚，存在明显缺口。"
+      },
+      "jev": {
+        "answer_relevance": "relevant",
+        "followup_probability": 0.83,
+        "followup_confidence": 0.31,
+        "followup_target": "point_1",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 340.4049999953713,
+      "jev_route": "fallback",
+      "fallback_reason": "low_confidence"
+    },
+    {
+      "id": "stream_complete",
+      "expected": {
+        "followup": false,
+        "target": null
+      },
+      "deepseek_latency_ms": 1432.3958000022685,
+      "deepseek": {
+        "answer_relevance": "relevant",
+        "followup_needed": false,
+        "followup_focus": null,
+        "rationale": "回答覆盖了事件标识与持久化、重连后快照或事件补放、完成事件和重复事件处理三个评分要点，内容切题且完整。"
+      },
+      "jev": {
+        "answer_relevance": "relevant",
+        "followup_probability": 0.55,
+        "followup_confidence": 0.12,
+        "followup_target": "point_1",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 373.26300000131596,
+      "jev_route": "fallback",
+      "fallback_reason": "low_confidence"
+    },
+    {
+      "id": "stream_partial",
+      "expected": {
+        "followup": true,
+        "target": "point_2"
+      },
+      "deepseek_latency_ms": 2534.9361000044155,
+      "deepseek": {
+        "answer_relevance": "partially_relevant",
+        "followup_needed": true,
+        "followup_focus": "请说明如何处理完成事件和重复事件，例如如何标记流结束以及如何幂等地处理重连后可能重复收到的事件。",
+        "rationale": "回答提到了事件标识与持久化（稳定序号并记录业务结果）以及重连后快照或事件补放，覆盖了前两个评分要点，但未涉及完成事件和重复事件的处理，因此需要追问以确认该要点的掌握情况。"
+      },
+      "jev": {
+        "answer_relevance": "relevant",
+        "followup_probability": 0.72,
+        "followup_confidence": 0.87,
+        "followup_target": "point_2",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 349.84410000470234,
+      "jev_route": "followup",
+      "fallback_reason": null
+    },
+    {
+      "id": "stream_short",
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "deepseek_latency_ms": 2527.1359000034863,
+      "deepseek": {
+        "answer_relevance": "partially_relevant",
+        "followup_needed": true,
+        "followup_focus": "请具体说明事件标识与持久化的实现方式，以及如何利用它们实现断线后的状态恢复。",
+        "rationale": "回答仅提及评分要点中的“事件标识与持久化”，但未展开具体实现，也未涉及“重连后快照或事件补放”和“完成事件和重复事件处理”。回答过于简略，无法判断其理解深度，需要追问以获取更多细节。"
+      },
+      "jev": {
+        "answer_relevance": "partially_relevant",
+        "followup_probability": 0.89,
+        "followup_confidence": 0.62,
+        "followup_target": "point_1",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 309.8574999967241,
+      "jev_route": "followup",
+      "fallback_reason": null
+    },
+    {
+      "id": "stream_off_topic",
+      "expected": {
+        "followup": true,
+        "target": "point_0"
+      },
+      "deepseek_latency_ms": 1672.8254000045126,
+      "deepseek": {
+        "answer_relevance": "off_topic",
+        "followup_needed": true,
+        "followup_focus": "请针对流式接口断线后的客户端状态恢复，说明事件标识与持久化、重连后快照或事件补放、完成事件和重复事件处理等关键点。",
+        "rationale": "回答完全偏离问题，讨论篮球比赛，未涉及任何技术要点。需要追问以引导候选人回到主题。"
+      },
+      "jev": {
+        "answer_relevance": "off_topic",
+        "followup_probability": 0.77,
+        "followup_confidence": 0.69,
+        "followup_target": "point_0",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 285.6065000014496,
+      "jev_route": "followup",
+      "fallback_reason": null
+    },
+    {
+      "id": "stream_misconception",
+      "expected": {
+        "followup": true,
+        "target": "point_0"
+      },
+      "deepseek_latency_ms": 2508.3153000014136,
+      "deepseek": {
+        "answer_relevance": "off_topic",
+        "followup_needed": true,
+        "followup_focus": "请说明客户端如何通过事件标识、持久化或快照来恢复断线后的可靠状态，而不是依赖 TCP 自动恢复。",
+        "rationale": "回答声称 TCP 会自动恢复服务进程重启前的全部流式事件，这是错误的。TCP 不提供应用层事件恢复，且服务进程重启后连接会断开，事件不会自动重放。回答未涉及评分要点中的事件标识与持久化、重连后快照或事件补放、完成事件和重复事件处理，完全偏离问题。"
+      },
+      "jev": {
+        "answer_relevance": "partially_relevant",
+        "followup_probability": 0.88,
+        "followup_confidence": 0.56,
+        "followup_target": "point_0",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 319.999800005462,
+      "jev_route": "fallback",
+      "fallback_reason": "low_confidence"
+    },
+    {
+      "id": "stream_missing_engineering",
+      "expected": {
+        "followup": true,
+        "target": "point_2"
+      },
+      "deepseek_latency_ms": 2060.1598999928683,
+      "deepseek": {
+        "answer_relevance": "partially_relevant",
+        "followup_needed": true,
+        "followup_focus": "请具体说明如何处理完成事件和重复事件，例如如何识别重复事件、完成事件如何触发状态提交或清理。",
+        "rationale": "回答提到了事件序号和快照/补放，覆盖了前两个要点，但未涉及完成事件和重复事件的处理，且明确表示异常处理尚未设计，存在实质性缺口。"
+      },
+      "jev": {
+        "answer_relevance": "relevant",
+        "followup_probability": 0.83,
+        "followup_confidence": 0.85,
+        "followup_target": "point_2",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 390.30859999911627,
+      "jev_route": "followup",
+      "fallback_reason": null
+    },
+    {
+      "id": "stream_resolved_after_followup",
+      "expected": {
+        "followup": false,
+        "target": null
+      },
+      "deepseek_latency_ms": 1949.41810000455,
+      "deepseek": {
+        "answer_relevance": "relevant",
+        "followup_needed": false,
+        "followup_focus": null,
+        "rationale": "回答直接回应了追问，提出以明确完成事件结束操作并按事件标识去重，覆盖了完成事件和重复事件处理这一评分要点。结合前一轮回答中已涉及事件标识与持久化、重连后快照或事件补放，整体已覆盖全部评分要点，无需进一步追问。"
+      },
+      "jev": {
+        "answer_relevance": "relevant",
+        "followup_probability": 0.62,
+        "followup_confidence": 0.07,
+        "followup_target": "point_2",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 354.2029999953229,
+      "jev_route": "fallback",
+      "fallback_reason": "low_confidence"
+    },
+    {
+      "id": "stream_multiple_gaps",
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "deepseek_latency_ms": 2498.942599995644,
+      "deepseek": {
+        "answer_relevance": "partially_relevant",
+        "followup_needed": true,
+        "followup_focus": "请说明重连后如何利用事件序号恢复状态，例如通过快照加事件补放或从检查点重放，并如何处理重复事件和完成事件。",
+        "rationale": "回答提到了事件序号和持久化，覆盖了部分要点，但未涉及重连后的具体恢复机制（快照或补放）以及完成事件和重复事件的处理，存在实质性缺口。"
+      },
+      "jev": {
+        "answer_relevance": "partially_relevant",
+        "followup_probability": 0.87,
+        "followup_confidence": 0.64,
+        "followup_target": "point_1",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 298.337399995944,
+      "jev_route": "followup",
+      "fallback_reason": null
+    },
+    {
+      "id": "evaluation_complete",
+      "expected": {
+        "followup": false,
+        "target": null
+      },
+      "deepseek_latency_ms": 1541.6212999989511,
+      "deepseek": {
+        "answer_relevance": "relevant",
+        "followup_needed": false,
+        "followup_focus": null,
+        "rationale": "回答覆盖了版本化测试集和对照基线、任务质量与性能成本指标、失败样本及发布回滚门槛，与评分要点高度一致，无需追问。"
+      },
+      "jev": {
+        "answer_relevance": "relevant",
+        "followup_probability": 0.59,
+        "followup_confidence": 0.59,
+        "followup_target": "point_2",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 291.13320000033127,
+      "jev_route": "fallback",
+      "fallback_reason": "low_confidence"
+    },
+    {
+      "id": "evaluation_partial",
+      "expected": {
+        "followup": true,
+        "target": "point_2"
+      },
+      "deepseek_latency_ms": 1803.2789999997476,
+      "deepseek": {
+        "answer_relevance": "partially_relevant",
+        "followup_needed": true,
+        "followup_focus": "请补充失败样本分析以及发布回滚门槛的具体做法。",
+        "rationale": "回答覆盖了版本化测试集和对照基线，以及任务质量与性能成本指标，但未提及失败样本分析及发布回滚门槛，这是评分要点中的关键部分。"
+      },
+      "jev": {
+        "answer_relevance": "relevant",
+        "followup_probability": 0.81,
+        "followup_confidence": 0.53,
+        "followup_target": "point_2",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 308.31880000187084,
+      "jev_route": "fallback",
+      "fallback_reason": "low_confidence"
+    },
+    {
+      "id": "evaluation_short",
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "deepseek_latency_ms": 1517.8535000013653,
+      "deepseek": {
+        "answer_relevance": "partially_relevant",
+        "followup_needed": true,
+        "followup_focus": "请补充任务质量与性能成本指标，以及失败样本和发布回滚门槛的具体评估方法。",
+        "rationale": "回答仅提及版本化测试集和对照基线，未涉及任务质量与性能成本指标、失败样本及发布回滚门槛，覆盖不完整。"
+      },
+      "jev": null,
+      "jev_latency_ms": 355.2066999982344,
+      "jev_route": "fallback",
+      "fallback_reason": "jev_invalid_response"
+    },
+    {
+      "id": "evaluation_off_topic",
+      "expected": {
+        "followup": true,
+        "target": "point_0"
+      },
+      "deepseek_latency_ms": 1445.1571000026888,
+      "deepseek": {
+        "answer_relevance": "off_topic",
+        "followup_needed": false,
+        "followup_focus": null,
+        "rationale": "回答完全未涉及提示词修改评估，而是谈论篮球比赛，与问题无关。"
+      },
+      "jev": {
+        "answer_relevance": "off_topic",
+        "followup_probability": 0.75,
+        "followup_confidence": 0.64,
+        "followup_target": "point_0",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 292.26390000258107,
+      "jev_route": "followup",
+      "fallback_reason": null
+    },
+    {
+      "id": "evaluation_misconception",
+      "expected": {
+        "followup": true,
+        "target": "point_0"
+      },
+      "deepseek_latency_ms": 2611.08090000198,
+      "deepseek": {
+        "answer_relevance": "off_topic",
+        "followup_needed": true,
+        "followup_focus": "请说明如何通过版本化测试集和对照基线客观比较新旧提示词的任务质量与性能成本，并设定失败样本和回滚门槛。",
+        "rationale": "回答仅依赖模型自述效果更好，未涉及任何客观评估方法，如版本化测试集、对照基线、任务质量与性能成本指标、失败样本分析或发布回滚门槛，完全偏离评分要点。"
+      },
+      "jev": {
+        "answer_relevance": "partially_relevant",
+        "followup_probability": 0.85,
+        "followup_confidence": 0.47,
+        "followup_target": "point_0",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 330.7948000001488,
+      "jev_route": "fallback",
+      "fallback_reason": "low_confidence"
+    },
+    {
+      "id": "evaluation_missing_engineering",
+      "expected": {
+        "followup": true,
+        "target": "point_2"
+      },
+      "deepseek_latency_ms": 2547.280700004194,
+      "deepseek": {
+        "answer_relevance": "partially_relevant",
+        "followup_needed": true,
+        "followup_focus": "请补充失败样本分析和发布回滚门槛的具体设计，例如如何定义失败、设置何种指标阈值触发回滚。",
+        "rationale": "回答提到了版本化测试集、对照基线以及任务质量与性能成本指标，覆盖了前两个评分要点，但未涉及失败样本及发布回滚门槛，且末尾提到异常处理未设计，存在明显缺口。"
+      },
+      "jev": {
+        "answer_relevance": "relevant",
+        "followup_probability": 0.85,
+        "followup_confidence": 0.33,
+        "followup_target": "point_2",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 324.234499996237,
+      "jev_route": "fallback",
+      "fallback_reason": "low_confidence"
+    },
+    {
+      "id": "evaluation_resolved_after_followup",
+      "expected": {
+        "followup": false,
+        "target": null
+      },
+      "deepseek_latency_ms": 1770.21650000097,
+      "deepseek": {
+        "answer_relevance": "relevant",
+        "followup_needed": false,
+        "followup_focus": null,
+        "rationale": "回答覆盖了版本化测试集和对照基线、任务质量与性能成本指标、失败样本及发布回滚门槛三个评分要点。追问后补充了退化样本分析和发布门槛，信息完整，无需进一步追问。"
+      },
+      "jev": {
+        "answer_relevance": "relevant",
+        "followup_probability": 0.67,
+        "followup_confidence": 0.72,
+        "followup_target": "point_2",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 352.08240000065416,
+      "jev_route": "fallback",
+      "fallback_reason": "probability_gray_zone"
+    },
+    {
+      "id": "evaluation_multiple_gaps",
+      "expected": {
+        "followup": true,
+        "target": "point_1"
+      },
+      "deepseek_latency_ms": 1724.7645999959786,
+      "deepseek": {
+        "answer_relevance": "partially_relevant",
+        "followup_needed": true,
+        "followup_focus": "请补充任务质量与性能成本指标，以及失败样本和发布回滚门槛。",
+        "rationale": "回答提到了版本化测试集和对照基线，但未涉及任务质量与性能成本指标、失败样本及发布回滚门槛，存在多个可追问的缺口。"
+      },
+      "jev": {
+        "answer_relevance": "partially_relevant",
+        "followup_probability": 0.88,
+        "followup_confidence": 0.58,
+        "followup_target": "point_1",
+        "decision_source": "jev"
+      },
+      "jev_latency_ms": 336.9546999965678,
+      "jev_route": "fallback",
+      "fallback_reason": "low_confidence"
+    }
+  ]
+}

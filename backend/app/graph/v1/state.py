@@ -26,6 +26,7 @@ class InterviewState(TypedDict, total=False):
     input_valid: bool
     validation_error: dict[str, Any] | None
     answer_assessment: dict[str, Any] | None
+    decision_metadata: dict[str, Any] | None
     question_evaluation: dict[str, Any] | None
     question_results: list[dict[str, Any]]
     finish_requested: bool
@@ -33,4 +34,3 @@ class InterviewState(TypedDict, total=False):
     report: dict[str, Any] | None
     status: str
     failure: dict[str, Any] | None
-
